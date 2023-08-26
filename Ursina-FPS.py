@@ -1,11 +1,8 @@
-<<<<<<< HEAD
-=======
 from ursina import *
 
 
 class FirstPersonController(Entity):
     def __init__(self, **kwargs):
-        self.cursor = Entity(parent=camera.ui, model='quad', color=color.pink, scale=.008, rotation_z=45)
         super().__init__()
         self.speed = 5
         self.height = 2
@@ -22,18 +19,17 @@ class FirstPersonController(Entity):
         self.grounded = False
         self.jump_height = 2
         self.jump_up_duration = .5
-        self.fall_after = .35 # will interrupt jump up
+        self.fall_after = .35
         self.jumping = False
         self.air_time = 0
 
-        self.traverse_target = scene     # by default, it will collide with everything. change this to change the raycasts' traverse targets.
+        self.traverse_target = scene
         self.ignore_list = [self, ]
         self.on_destroy = self.on_disable
 
         for key, value in kwargs.items():
             setattr(self, key ,value)
 
-        # make sure we don't fall through the ground if we start inside it
         if self.gravity:
             ray = raycast(self.world_position+(0,self.height,0), self.down, traverse_target=self.traverse_target, ignore=self.ignore_list)
             if ray.hit:
@@ -66,26 +62,20 @@ class FirstPersonController(Entity):
                 move_amount[2] = max(move_amount[2], 0)
             self.position += move_amount
 
-            # self.position += self.direction * self.speed * time.dt
-
-
         if self.gravity:
-            # gravity
             ray = raycast(self.world_position+(0,self.height,0), self.down, traverse_target=self.traverse_target, ignore=self.ignore_list)
-            # ray = boxcast(self.world_position+(0,2,0), self.down, ignore=self.ignore_list)
 
             if ray.distance <= self.height+.1:
                 if not self.grounded:
                     self.land()
                 self.grounded = True
-                # make sure it's not a wall and that the point is not too far up
+
                 if ray.world_normal.y > .7 and ray.world_point.y - self.world_y < .5: # walk up slope
                     self.y = ray.world_point[1]
                 return
             else:
                 self.grounded = False
 
-            # if not on ground and not on way up in jump, fall
             self.y -= min(self.air_time, ray.distance-.05) * time.dt * 100
             self.air_time += time.dt * .25 * self.gravity
 
@@ -130,7 +120,7 @@ if __name__ == '__main__':
     from ursina.prefabs.first_person_controller import FirstPersonController
     window.vsync = False
     app = Ursina()
-    # Sky(color=color.gray)
+    Sky(color=color.blue)
     ground = Entity(model='plane', scale=(100,1,100), color=color.yellow.tint(-.2), texture='white_cube', texture_scale=(100,100), collider='box')
     e = Entity(model='cube', scale=(1,5,10), x=2, y=.01, rotation_y=45, collider='box', texture='white_cube')
     e.texture_scale = (e.scale_z, e.scale_y)
@@ -149,11 +139,6 @@ if __name__ == '__main__':
 
     slope = Entity(model='cube', collider='box', position=(0,0,8), scale=6, rotation=(45,0,0), texture='brick', texture_scale=(8,8))
     slope = Entity(model='cube', collider='box', position=(5,0,10), scale=6, rotation=(80,0,0), texture='brick', texture_scale=(8,8))
-    # hill = Entity(model='sphere', position=(20,-10,10), scale=(25,25,25), collider='sphere', color=color.green)
-    # hill = Entity(model='sphere', position=(20,-0,10), scale=(25,25,25), collider='mesh', color=color.green)
-    # from ursina.shaders import basic_lighting_shader
-    # for e in scene.entities:
-    #     e.shader = basic_lighting_shader
 
     hookshot_target = Button(parent=scene, model='cube', color=color.brown, position=(4,5,5))
     hookshot_target.on_click = Func(player.animate_position, hookshot_target.position, duration=.5, curve=curve.linear)
@@ -166,13 +151,11 @@ if __name__ == '__main__':
             bullet.animate_position(bullet.position+(bullet.forward*50), curve=curve.linear, duration=1)
             destroy(bullet, delay=1)
         if key == 'right mouse down':
-            gun.position=(0,-0.54,0)
+            gun.position=(0,-0.535,0)
         if key == 'right mouse up':
             gun.position=(0.5,-0.5,0.5)
 
         if key == '1':
             player.gun='M4A1'
-
-    # player.add_script(NoclipMode())
+    
     app.run()
->>>>>>> dd214a45fe795ca598f148ba9ec7c307e5b30bd2
