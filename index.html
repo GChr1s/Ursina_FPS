@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html>   
+    <head>
+      <link rel="icon" type="image/png" sizes="36x36" href="Files/android-icon-36x36.png">
+      <title>
+        NAVAN
+      </title>
+    </head>
+    
+    <body style="background-image:url('')">
+      <A href="http://naver.com"><IMG src="Files/NAVAN.png" width="350"> </A>
+      <P>
+      <input type="Search" id="Text" placeholder="검색어 입력"></input>
+      <img src="Files/Search.png" onclick="search()" width="50"></button>
+    </body>
+</html>
+
+<script>
+function search() {
+  var link = document.getElementById('ENGINE').value;
+  link += document.getElementById('Text').value;
+    
+  location.href=link;
+  location.replace(link);
+    
+  window.open(link);
+}
+</script> 
+
+<select id="ENGINE">
+  <option value="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=" selected="NAVER">NAVER</option>
+  <option value="https://www.google.com/search?q=">GOOGLE</option>
+  <option value="https://www.bing.com/search?q=">BING</option>
+  <option value="escapefromtarkov.com" disabled>???</option>
+</select>
+                  
+<style>
+  body {
+    display:flex;
+    width:25%;
+    height:50px;    
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+  }
+  img {
+    position : relative;
+    top : 20px;
+  }
+  input[type="Search"]{
+        width: 270px;
+        padding:10px;
+        border:2px solid;
+        border-radius:5px;
+        font-size:16px;
+        color:#36ab36;
+    }
+  select {
+    width: 120px;
+    padding:10px;
+    border:2px solid;
+    border-radius:5px;
+    font-size:16px;
+  }
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    input[type="button"] {
+      width: 77px;
+      height: 50px;
+      font-size: 25px;
+    }
+    input[type="Calculator"] {
+      width: 300px;
+      padding:10px;
+      border:2px solid;
+      border-radius:5px;
+      font-size:16px;
+      color:#36ab36;
+    }
+  </style>
+</head>
+<body>
+  <h1>계산기</h1>
+  
+  <form name="calculator">
+    <input type="Calculator" name="display" id="display" disabled>
+    <br>
+    <input type="button" value="1" onclick="appendCharacter('1')">
+    <input type="button" value="2" onclick="appendCharacter('2')">
+    <input type="button" value="3" onclick="appendCharacter('3')">
+    <input type="button" value="+" onclick="appendCharacter('+')">
+    <br>
+    <input type="button" value="4" onclick="appendCharacter('4')">
+    <input type="button" value="5" onclick="appendCharacter('5')">
+    <input type="button" value="6" onclick="appendCharacter('6')">
+    <input type="button" value="-" onclick="appendCharacter('-')">
+    <br>
+    <input type="button" value="7" onclick="appendCharacter('7')">
+    <input type="button" value="8" onclick="appendCharacter('8')">
+    <input type="button" value="9" onclick="appendCharacter('9')">
+    <input type="button" value="*" onclick="appendCharacter('*')">
+    <br>
+    <input type="button" value="C" onclick="clearDisplay()">
+    <input type="button" value="0" onclick="appendCharacter('0')">
+    <input type="button" value="√" onclick="calculateSqrt()">
+    <input type="button" value="/" onclick="appendCharacter('/')">
+    <br>
+    <input type="button" value="." onclick="appendCharacter('.')">
+    <input type="button" value="(" onclick="appendCharacter('(')">
+    <input type="button" value=")" onclick="appendCharacter(')')">
+    <input type="button" value="%" onclick="appendCharacter('%')">
+    <br>
+    <input type="button" value="=" onclick="calculate()">
+    
+  </form>
+  
+  <script>
+    function appendCharacter(character) {
+      document.calculator.display.value += character;
+    }
+    
+    function clearDisplay() {
+      document.calculator.display.value = '';
+    }
+    
+    function calculate() {
+      var expression = document.calculator.display.value;
+      try {
+        var result = eval(expression);
+        document.calculator.display.value = result;
+      } catch (error) {
+        document.calculator.display.value = 'Error';
+      }
+    }
+    
+    function calculateSqrt() {
+      var expression = document.calculator.display.value;
+      try {
+        var result = Math.sqrt(eval(expression));
+        document.calculator.display.value = result;
+      } catch (error) {
+        document.calculator.display.value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>
