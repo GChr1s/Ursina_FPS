@@ -1,5 +1,5 @@
 from ursina import *
-
+import numpy
 
 class FirstPersonController(Entity):
     def __init__(self, **kwargs):
@@ -99,7 +99,6 @@ class FirstPersonController(Entity):
         self.jumping = False
 
     def land(self):
-        # print('land')
         self.air_time = 0
         self.grounded = True
 
@@ -113,15 +112,13 @@ class FirstPersonController(Entity):
         mouse.locked = False
         self.cursor.enabled = False
 
-
-
-
 if __name__ == '__main__':
     from ursina.prefabs.first_person_controller import FirstPersonController
     window.vsync = False
     app = Ursina()
+    
     Sky(color=color.blue)
-    ground = Entity(model='plane', scale=(100,1,100), color=color.yellow.tint(-.2), texture='white_cube', texture_scale=(100,100), collider='box')
+    ground = Entity(model='plane', scale=(100,1,100), color=color.yellow, texture='brick', texture_scale=(100,100), collider='box')
     e = Entity(model='cube', scale=(1,5,10), x=2, y=.01, rotation_y=45, collider='box', texture='white_cube')
     e.texture_scale = (e.scale_z, e.scale_y)
     e = Entity(model='cube', scale=(1,5,10), x=-2, y=.01, collider='box', texture='white_cube')
@@ -131,7 +128,7 @@ if __name__ == '__main__':
     player.gun = None
 
 
-    gun= Button(parent=camera, model='assets\Models_Gun\M4A1.fbx', origin_y=-.5, position=(0.5,-0.5,0.5), rotation_y=(270), collider='mesh', scale=(0.005,0.005,0.005))
+    gun = Button(parent=camera, model='assets\Models_Gun\M4A1.fbx', origin_y=-.5, position=(0.5,-0.5,0.5), rotation_y=(270), collider='mesh', scale=(0.005,0.005,0.005))
     def get_gun():
         gun.parent = camera
         gun.position = Vec3(.5,0,.5)
@@ -145,13 +142,14 @@ if __name__ == '__main__':
 
     def input(key):
         if key == 'left mouse down' and player.gun:
-            gun.blink(color.orange)
             bullet = Entity(parent=gun, model='cube', scale=.1, color=color.black)
             bullet.world_parent = scene
-            bullet.animate_position(bullet.position+(bullet.forward*50), curve=curve.linear, duration=1)
-            destroy(bullet, delay=1)
+            bullet.animate_position(bullet.position+(bullet.forward*250), curve=curve.linear, duration=1)
+            destroy(bullet, delay=3)
         if key == 'right mouse down':
-            gun.position=(0,-0.535,0)
+            for i in numpy.arange(-0.5,0): #오류 안고침
+               gun.position=(i,-0.535,0)
+
         if key == 'right mouse up':
             gun.position=(0.5,-0.5,0.5)
 
