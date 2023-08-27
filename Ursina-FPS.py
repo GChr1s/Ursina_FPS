@@ -1,4 +1,11 @@
 from ursina import *
+from ursina.prefabs.first_person_controller import FirstPersonController
+from ursina.shaders import lit_with_shadows_shader
+
+app = Ursina()
+
+random.seed(0)
+Entity.default_shader = lit_with_shadows_shader
 
 class FirstPersonController(Entity):
     def __init__(self, **kwargs):
@@ -126,12 +133,8 @@ if __name__ == '__main__':
     player = FirstPersonController(y=2, origin_y=-.5)
     player.gun = None
 
-
-    gun = Button(parent=camera, model='assets\Models_Gun\M4A1.fbx', origin_y=-.5, position=(0.5,-0.5,0.5), rotation_y=(270), collider='mesh', scale=(0.005,0.005,0.005))
-    def get_gun():
-        gun.parent = camera
-        gun.position = Vec3(.5,0,.5)
-        player.gun = gun
+    gun = Entity(model='assets\Models_Gun\M4A1.fbx', parent=camera, color=color.black, rotation_y=270, position=(0.5,-0.5,0.5), scale=0.005, on_cooldown=False)
+    gun.muzzle_flash = Entity(parent=gun, z=1, world_scale=.5, model='quad', color=color.yellow, enabled=False)
 
     slope = Entity(model='cube', collider='box', position=(0,0,8), scale=6, rotation=(45,0,0), texture='brick', texture_scale=(8,8))
     slope = Entity(model='cube', collider='box', position=(5,0,10), scale=6, rotation=(80,0,0), texture='brick', texture_scale=(8,8))
@@ -139,19 +142,33 @@ if __name__ == '__main__':
     hookshot_target = Button(parent=scene, model='cube', color=color.brown, position=(4,5,5))
     hookshot_target.on_click = Func(player.animate_position, hookshot_target.position, duration=.5, curve=curve.linear)
 
-    def input(key):
-        if key == 'left mouse down' and player.gun:
-            bullet = Entity(parent=gun, model='cube', scale=.1, color=color.black)
-            bullet.world_parent = scene
-            bullet.animate_position(bullet.position+(bullet.forward*250), curve=curve.linear, duration=1)
-            destroy(bullet, delay=3)
-            player.animate_rotation((-20, 0, 0), duration = 0.1, curve = curve.linear)
-            player.animate("z", 1.2, duration = 0.03, curve = curve.linear)
-            player.animate("z", 1.5, 0.2, delay = 0.1, curve = curve.linear)
-            player.animate_rotation((-10, 0, 0), 0.2, delay = 0.1, curve = curve.linear)
-            player.animate_rotation((0, 0, 0), 0.4, delay = 0.12, curve = curve.linear)
-
-        if key == '1':
-            player.gun='M4A1'
+    def update():
+        if held_keys['left mouse']:
+            shoot()
     
+    shootables_parent = Entity()
+    mouse.traverse_target = shootables_parent
+
+    def shoot():
+        if not gun.on_cooldown:
+            # print('shoot')
+            gun.on_cooldown = True
+            gun.muzzle_flash.enabled=True
+            from ursina.prefabs.ursfx import ursfx
+            ursfx([(0.0, 0.0), (0.1, 0.9), (0.15, 0.75), (0.3, 0.14), (0.6, 0.0)], volume=0.5, wave='noise', pitch=random.uniform(-13,-12), pitch_change=-12, speed=3.0)
+            invoke(gun.muzzle_flash.disable, delay=.05)
+            invoke(setattr, gun, 'on_cooldown', False, delay=.15)
+            if mouse.hovered_entity and hasattr(mouse.hovered_entity, 'hp'):
+                mouse.hovered_entity.hp -= 10
+                mouse.hovered_entity.blink(color.red)
+    
+    class Enemy(Entity):
+        def __init__(self, **kwargs):
+            super().__init__(parent=shootables_parent, model='cube', scale_y=2, origin_y=-.5, color=color.light_gray, collider='box', **kwargs)
+            self.health_bar = Entity(parent=self, y=1.2, model='cube', color=color.red, world_scale=(1.5,.1,.1))
+            self.max_hp = 100
+            self.hp = self.max_hp
+    
+    enemies = [Enemy(x=x*4) for x in range(4)]
+            
     app.run()
