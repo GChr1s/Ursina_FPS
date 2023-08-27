@@ -137,7 +137,8 @@ if __name__ == '__main__':
     player = FirstPersonController(y=2, origin_y=-.5)
     player.gun = None
 
-    gun = Entity(model='assets\Models_Gun\M4A1.fbx', parent=camera, color=color.black, rotation_y=270, position=(0.5,-0.5,0.5), scale=0.005, on_cooldown=False)
+# 총 고장남 고쳐주셈ㅋ    
+    gun = Entity(model='assets\animated-m4a1\source\rig.fbx', Texture='assets\animated-m4a1\textures\m4a4_default_color_psd_3b0b391e.png', parent=camera, color=color.black, rotation_y=270, position=(0.5,-0.5,0.5), scale=0.005, on_cooldown=False)
     gullet = Entity(model='cube',parent=camera,position=(0.505,-0.18,2.3),scale=0.05,rotation_y=270,color=color.black)
     gun.muzzle_flash = Entity(parent=gun, z=1, world_scale=.5, model='quad', color=color.yellow, enabled=False)
 
