@@ -1,5 +1,4 @@
 from ursina import *
-import numpy as numpy
 
 class FirstPersonController(Entity):
     def __init__(self, **kwargs):
@@ -146,11 +145,6 @@ if __name__ == '__main__':
             bullet.world_parent = scene
             bullet.animate_position(bullet.position+(bullet.forward*250), curve=curve.linear, duration=1)
             destroy(bullet, delay=3)
-        if key == 'right mouse down':
-               gun.position=(0,-0.535,0)
-
-        if key == 'right mouse up':
-            gun.position=(0.5,-0.5,0.5)
 
         if key == '1':
             player.gun='M4A1'
