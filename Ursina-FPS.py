@@ -3,9 +3,14 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
 
 app = Ursina()
+window.fullscreen_resolution = (1920, 1080)
+window.fullscreen = True
 
 random.seed(0)
 Entity.default_shader = lit_with_shadows_shader
+sun = DirectionalLight()
+sun.look_at(Vec3(1,-1,-1))
+Sky()
 
 class FirstPersonController(Entity):
     def __init__(self, **kwargs):
@@ -123,8 +128,7 @@ if __name__ == '__main__':
     window.vsync = False
     app = Ursina()
     
-    Sky(color=color.blue)
-    ground = Entity(model='plane', scale=(100,1,100), color=color.yellow, texture='brick', texture_scale=(100,100), collider='box')
+    ground = Entity(model='plane', scale=(100,1,100), color=color.green, texture='grass', texture_scale=(100,100), collider='box')
     e = Entity(model='cube', scale=(1,5,10), x=2, y=.01, rotation_y=45, collider='box', texture='white_cube')
     e.texture_scale = (e.scale_z, e.scale_y)
     e = Entity(model='cube', scale=(1,5,10), x=-2, y=.01, collider='box', texture='white_cube')
@@ -150,17 +154,11 @@ if __name__ == '__main__':
     mouse.traverse_target = shootables_parent
 
     def shoot():
-        if not gun.on_cooldown:
-            # print('shoot')
-            gun.on_cooldown = True
-            gun.muzzle_flash.enabled=True
-            from ursina.prefabs.ursfx import ursfx
-            ursfx([(0, 0), (0.1, 0.9), (0.15, 0.75), (0.3, 0.14), (0.6, 0)], volume=0.5, wave='noise', pitch=random.uniform(-13,-12), pitch_change=-12, speed=3)
-            invoke(gun.muzzle_flash.disable, delay=.05)
-            invoke(setattr, gun, 'on_cooldown', False, delay=.05)
-            if mouse.hovered_entity and hasattr(mouse.hovered_entity, 'hp'):
-                mouse.hovered_entity.hp -= 10
-                mouse.hovered_entity.blink(color.red)
+        gun.blink(color.orange)
+        bullet = Entity(parent=gun, model='cube', scale=.1, color=color.black)
+        bullet.world_parent = scene
+        bullet.animate_position(bullet.position+(bullet.forward*50), curve=curve.linear, duration=1)
+        destroy(bullet, delay=1)
     
     class Enemy(Entity):
         def __init__(self, **kwargs):
@@ -180,5 +178,5 @@ if __name__ == '__main__':
                 return
     
     enemies = [Enemy(x=x*4) for x in range(4)]
-            
+
     app.run()
