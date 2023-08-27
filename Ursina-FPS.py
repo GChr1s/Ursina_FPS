@@ -1,5 +1,5 @@
 from ursina import *
-import numpy
+import numpy as numpy
 
 class FirstPersonController(Entity):
     def __init__(self, **kwargs):
