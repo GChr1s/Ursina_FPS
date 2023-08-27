@@ -155,9 +155,9 @@ if __name__ == '__main__':
             gun.on_cooldown = True
             gun.muzzle_flash.enabled=True
             from ursina.prefabs.ursfx import ursfx
-            ursfx([(0.0, 0.0), (0.1, 0.9), (0.15, 0.75), (0.3, 0.14), (0.6, 0.0)], volume=0.5, wave='noise', pitch=random.uniform(-13,-12), pitch_change=-12, speed=3.0)
+            ursfx([(0, 0), (0.1, 0.9), (0.15, 0.75), (0.3, 0.14), (0.6, 0)], volume=0.5, wave='noise', pitch=random.uniform(-13,-12), pitch_change=-12, speed=3)
             invoke(gun.muzzle_flash.disable, delay=.05)
-            invoke(setattr, gun, 'on_cooldown', False, delay=.15)
+            invoke(setattr, gun, 'on_cooldown', False, delay=.05)
             if mouse.hovered_entity and hasattr(mouse.hovered_entity, 'hp'):
                 mouse.hovered_entity.hp -= 10
                 mouse.hovered_entity.blink(color.red)
@@ -165,9 +165,19 @@ if __name__ == '__main__':
     class Enemy(Entity):
         def __init__(self, **kwargs):
             super().__init__(parent=shootables_parent, model='cube', scale_y=2, origin_y=-.5, color=color.light_gray, collider='box', **kwargs)
-            self.health_bar = Entity(parent=self, y=1.2, model='cube', color=color.red, world_scale=(1.5,.1,.1))
             self.max_hp = 100
             self.hp = self.max_hp
+
+        @property
+        def hp(self):
+            return self._hp
+
+        @hp.setter
+        def hp(self, value):
+            self._hp = value
+            if value <= 0:
+                destroy(self)
+                return
     
     enemies = [Enemy(x=x*4) for x in range(4)]
             
