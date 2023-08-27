@@ -137,7 +137,7 @@ if __name__ == '__main__':
     player = FirstPersonController(y=2, origin_y=-.5)
     player.gun = None
 
-    gun = Entity(model='assets\Models_Gun\M4A1.fbx', parent=camera, color=color.gray , rotation_y=270, position=(0.5,-0.5,0.5), scale=0.005, on_cooldown=False)
+    gun = Entity(model='assets\Models_Gun\M4A1.fbx', parent=camera, color=color.black, rotation_y=270, position=(0.5,-0.5,0.5), scale=0.005, on_cooldown=False)
     gullet = Entity(model='cube',parent=camera,position=(0.505,-0.185,0.2),scale=0.05,rotation_y=270)
     gun.muzzle_flash = Entity(parent=gun, z=1, world_scale=.5, model='quad', color=color.yellow, enabled=False)
 
@@ -158,7 +158,7 @@ if __name__ == '__main__':
 
         bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2),rotation_y=90, color=color.black)
         bullet.world_parent = scene
-        bullet.animate_position(bullet.position+(bullet.forward*50), curve=curve.linear, duration=1)
+        bullet.animate_position(bullet.position+(bullet.forward*500), curve=curve.linear, duration=1)
         destroy(bullet, delay=1)
     
     class Enemy(Entity):
@@ -179,5 +179,13 @@ if __name__ == '__main__':
                 return
     
     enemies = [Enemy(x=x*4) for x in range(4)]
+    
+    def aim(key):
+        if key == "right mouse down":
+            gun.position=(0,-0.535,0.5)
+        else:
+            gun.position=(0.5,-0.5,0.5)
+
+    aim = Entity(input=aim)
 
     app.run()
