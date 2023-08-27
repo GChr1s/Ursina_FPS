@@ -137,7 +137,8 @@ if __name__ == '__main__':
     player = FirstPersonController(y=2, origin_y=-.5)
     player.gun = None
 
-    gun = Entity(model='assets\Models_Gun\M4A1.fbx', parent=camera, color=color.black, rotation_y=270, position=(0.5,-0.5,0.5), scale=0.005, on_cooldown=False)
+    gun = Entity(model='assets\Models_Gun\M4A1.fbx', parent=camera, color=color.gray , rotation_y=270, position=(0.5,-0.5,0.5), scale=0.005, on_cooldown=False)
+    gullet = Entity(model='cube',parent=camera,position=(0.5,-0.2,0.2),scale=0.05,rotation_y=270)
     gun.muzzle_flash = Entity(parent=gun, z=1, world_scale=.5, model='quad', color=color.yellow, enabled=False)
 
     slope = Entity(model='cube', collider='box', position=(0,0,8), scale=6, rotation=(45,0,0), texture='brick', texture_scale=(8,8))
@@ -145,21 +146,20 @@ if __name__ == '__main__':
 
     hookshot_target = Button(parent=scene, model='cube', color=color.brown, position=(4,5,5))
     hookshot_target.on_click = Func(player.animate_position, hookshot_target.position, duration=.5, curve=curve.linear)
-
+    
     def update():
         if held_keys['left mouse']:
             shoot()
     
     shootables_parent = Entity()
     mouse.traverse_target = shootables_parent
-
+    
     def shoot():
-        
-        bullet = Entity(parent=gun, model='cube', scale=.1, color=color.black)
+
+        bullet = Entity(parent=gullet, model='cube', scale=(1,1,3),rotation_y=90, color=color.black)
         bullet.world_parent = scene
-        if keys == "left_mouse_down":
-            bullet.animate_position(bullet.position+(bullet.forward*50), curve=curve.linear, duration=1)
-            destroy(bullet, delay=1)
+        bullet.animate_position(bullet.position+(bullet.forward*1500), curve=curve.linear, duration=1)
+        destroy(bullet, delay=1)
     
     class Enemy(Entity):
         def __init__(self, **kwargs):
