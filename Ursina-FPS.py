@@ -147,13 +147,11 @@ if __name__ == '__main__':
     hookshot_target = Button(parent=scene, model='cube', color=color.brown, position=(4,5,5))
     hookshot_target.on_click = Func(player.animate_position, hookshot_target.position, duration=.5, curve=curve.linear)
     
-    def update():
-        if held_keys['left mouse']:
-            shoot()
-    
+
     shootables_parent = Entity()
     mouse.traverse_target = shootables_parent
     
+
     def shoot():
 
         bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2),rotation_y=90, color=color.black)
@@ -181,10 +179,16 @@ if __name__ == '__main__':
     enemies = [Enemy(x=x*4) for x in range(4)]
     
     def aim(key):
-        if key == "right mouse down":
+        if held_keys['right mouse']:
             gun.position=(0,-0.535,0.5)
+            gullet.position=(0.005,-0.535,0.5)
+            if held_keys['left mouse']:
+                shoot()
         else:
             gun.position=(0.5,-0.5,0.5)
+            gullet.position=(0.505,-0.185,0.2)
+            if held_keys['left mouse']:
+                shoot()
 
     aim = Entity(input=aim)
 
