@@ -147,8 +147,7 @@ if __name__ == '__main__':
             bullet.animate_position(bullet.position+(bullet.forward*250), curve=curve.linear, duration=1)
             destroy(bullet, delay=3)
         if key == 'right mouse down':
-            for i in numpy.arange(-0.5,0): #오류 안고침
-               gun.position=(i,-0.535,0)
+               gun.position=(0,-0.535,0)
 
         if key == 'right mouse up':
             gun.position=(0.5,-0.5,0.5)
