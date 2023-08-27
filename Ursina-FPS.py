@@ -145,6 +145,11 @@ if __name__ == '__main__':
             bullet.world_parent = scene
             bullet.animate_position(bullet.position+(bullet.forward*250), curve=curve.linear, duration=1)
             destroy(bullet, delay=3)
+            player.animate_rotation((-20, 0, 0), duration = 0.1, curve = curve.linear)
+            player.animate("z", 1.2, duration = 0.03, curve = curve.linear)
+            player.animate("z", 1.5, 0.2, delay = 0.1, curve = curve.linear)
+            player.animate_rotation((-10, 0, 0), 0.2, delay = 0.1, curve = curve.linear)
+            player.animate_rotation((0, 0, 0), 0.4, delay = 0.12, curve = curve.linear)
 
         if key == '1':
             player.gun='M4A1'
