@@ -138,7 +138,7 @@ if __name__ == '__main__':
     player.gun = None
 
     gun = Entity(model='assets\Models_Gun\M4A1.fbx', parent=camera, color=color.black, rotation_y=270, position=(0.5,-0.5,0.5), scale=0.005, on_cooldown=False)
-    gullet = Entity(model='cube',parent=camera,position=(0.505,-0.185,0.2),scale=0.05,rotation_y=270)
+    gullet = Entity(model='cube',parent=camera,position=(0.505,-0.18,2.3),scale=0.05,rotation_y=270,color=color.black)
     gun.muzzle_flash = Entity(parent=gun, z=1, world_scale=.5, model='quad', color=color.yellow, enabled=False)
 
     slope = Entity(model='cube', collider='box', position=(0,0,8), scale=6, rotation=(45,0,0), texture='brick', texture_scale=(8,8))
@@ -181,12 +181,12 @@ if __name__ == '__main__':
     def aim(key):
         if held_keys['right mouse']:
             gun.position=(0,-0.535,0.5)
-            gullet.position=(0.005,-0.535,0.5)
+            gullet.position=(0,-0.215,2.3)
             if held_keys['left mouse']:
                 shoot()
         else:
             gun.position=(0.5,-0.5,0.5)
-            gullet.position=(0.505,-0.185,0.2)
+            gullet.position=(0.505,-0.18,2.3)
             if held_keys['left mouse']:
                 shoot()
 
