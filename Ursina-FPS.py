@@ -154,11 +154,12 @@ if __name__ == '__main__':
     mouse.traverse_target = shootables_parent
 
     def shoot():
-        gun.blink(color.orange)
+        
         bullet = Entity(parent=gun, model='cube', scale=.1, color=color.black)
         bullet.world_parent = scene
-        bullet.animate_position(bullet.position+(bullet.forward*50), curve=curve.linear, duration=1)
-        destroy(bullet, delay=1)
+        if keys == "left_mouse_down":
+            bullet.animate_position(bullet.position+(bullet.forward*50), curve=curve.linear, duration=1)
+            destroy(bullet, delay=1)
     
     class Enemy(Entity):
         def __init__(self, **kwargs):
