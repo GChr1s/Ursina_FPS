@@ -3,8 +3,6 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
 
 app = Ursina()
-window.fullscreen_resolution = (1920, 1080)
-window.fullscreen = True
 
 random.seed(0)
 Entity.default_shader = lit_with_shadows_shader
@@ -138,8 +136,8 @@ if __name__ == '__main__':
     player.gun = None
 
 # 총 고장남 고쳐주셈ㅋ    
-    gun = Entity(model='assets\animated-m4a1\source\rig.fbx', Texture='assets\animated-m4a1\textures\m4a4_default_color_psd_3b0b391e.png', parent=camera, color=color.black, rotation_y=270, position=(0.5,-0.5,0.5), scale=0.005, on_cooldown=False)
-    gullet = Entity(model='cube',parent=camera,position=(0.505,-0.18,2.3),scale=0.05,rotation_y=270,color=color.black)
+    gun = Entity(model='assets\m4a1\M4A1.fbx', Texture='', parent=camera, color=color.black, scale=0.05, on_cooldown=False)
+    gullet = Entity(model='cube', parent=camera, scale=0.05, rotation_y=270, color=color.black, collision=True, Collider="box")
     gun.muzzle_flash = Entity(parent=gun, z=1, world_scale=.5, model='quad', color=color.yellow, enabled=False)
 
     slope = Entity(model='cube', collider='box', position=(0,0,8), scale=6, rotation=(45,0,0), texture='brick', texture_scale=(8,8))
@@ -157,7 +155,7 @@ if __name__ == '__main__':
 
         bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2),rotation_y=90, color=color.black)
         bullet.world_parent = scene
-        bullet.animate_position(bullet.position+(bullet.forward*500), curve=curve.linear, duration=1)
+        bullet.animate_position(bullet.position+(bullet.forward*50), curve=curve.linear, duration=1)
         destroy(bullet, delay=1)
     
     class Enemy(Entity):
@@ -178,18 +176,27 @@ if __name__ == '__main__':
                 return
     
     enemies = [Enemy(x=x*4) for x in range(4)]
+
+    M4A1_gunfire=Audio("assets\GunSounds\M4A1_Gunshot.mp3")
+    Cartridge=Audio("assets\GunSounds\Cartridge.mp3")
     
     def aim(key):
         if held_keys['right mouse']:
-            gun.position=(0,-0.535,0.5)
-            gullet.position=(0,-0.215,2.3)
+            gun.position=(0,-0.124,0.3)
+            gullet.position=(0,-0.124,1)
             if held_keys['left mouse']:
                 shoot()
+                M4A1_gunfire.play()
+                camera.shake(0.1)
+                Cartridge.play()
         else:
-            gun.position=(0.5,-0.5,0.5)
-            gullet.position=(0.505,-0.18,2.3)
+            gun.position=(0.25,-0.15,0.5)
+            gullet.position=(0.25,-0.1,0.75)
             if held_keys['left mouse']:
                 shoot()
+                M4A1_gunfire.play()
+                camera.shake(0.05)
+                Cartridge.play()
 
     aim = Entity(input=aim)
 
