@@ -135,7 +135,7 @@ if __name__ == '__main__':
     player.gun = None
   
     gun = Entity(model='assets\m4a1\M4A1.fbx', Texture='', parent=camera, color=color.black, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
-    gullet = Entity(model='cube', parent=camera, scale=0.025, rotation_y=270, position=(0.25,-0.1,0.75), color=color.black, collision=True, Collider="box")
+    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.75), color=color.black, collision=True, Collider="box")
     gun.muzzle_flash = Entity(parent=gun, z=1, world_scale=.5, model='quad', color=color.yellow, enabled=False)
 
     slope = Entity(model='cube', collider='box', position=(0,0,8), scale=6, rotation=(45,0,0), texture='brick', texture_scale=(8,8))
@@ -153,7 +153,7 @@ if __name__ == '__main__':
 
         bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.black)
         bullet.world_parent = scene
-        bullet.animate_position(bullet.position+(bullet.forward*1000), curve=curve.linear, duration=1)
+        bullet.animate_position(bullet.position+(bullet.forward*2500), curve=curve.linear, duration=1)
         destroy(bullet, delay=1)
     
     class Enemy(Entity):
