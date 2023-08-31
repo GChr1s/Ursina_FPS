@@ -3,7 +3,6 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
 
 app = Ursina()
-city = Entity(model="assets\structure\scene.gltf", collider = "mesh", position=(0,-20,0))
 random.seed(0)
 Entity.default_shader = lit_with_shadows_shader
 sun = DirectionalLight()
@@ -186,7 +185,6 @@ if __name__ == '__main__':
             if held_keys['left mouse']:
                 shoot()
                 M4A1_gunfire.play()
-                camera.shake(0.1)
                 Cartridge.play()
                 Audio
         else:
@@ -195,7 +193,6 @@ if __name__ == '__main__':
             if held_keys['left mouse']:
                 shoot()
                 M4A1_gunfire.play()
-                camera.shake(0.05)
                 Cartridge.play()
 
     aim = Entity(input=aim)
