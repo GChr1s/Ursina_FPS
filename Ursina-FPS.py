@@ -176,8 +176,8 @@ if __name__ == '__main__':
     
     enemies = [Enemy(x=x*4) for x in range(4)]
 
-    M4A1_gunfire=Audio("assets\GunSounds\M4A1_Gunshot.mp3")
-    Cartridge=Audio("assets\GunSounds\Cartridge.mp3")
+    M4A1_gunfire=Audio("assets\GunSounds\M4A1_Gunshot.mp3", volume=0.8)
+    Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.8)
     
     def aim(key):
         if held_keys['right mouse']:
@@ -188,6 +188,7 @@ if __name__ == '__main__':
                 M4A1_gunfire.play()
                 camera.shake(0.1)
                 Cartridge.play()
+                Audio
         else:
             gun.position=(0.25,-0.15,0.5)
             gullet.position=(0.25,-0.1,0.75)
