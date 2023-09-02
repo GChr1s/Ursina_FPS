@@ -126,17 +126,16 @@ if __name__ == '__main__':
     app = Ursina()
     
     ground = Entity(model='plane', scale=(100,1,100), color=color.green, texture='grass', texture_scale=(100,100), collider='box')
-    e = Entity(model='cube', scale=(1,5,10), x=2, y=.01, rotation_y=45, collider='box', texture='white_cube')
-    e.texture_scale = (e.scale_z, e.scale_y)
-    e = Entity(model='cube', scale=(1,5,10), x=-2, y=.01, collider='box', texture='white_cube')
-    e.texture_scale = (e.scale_z, e.scale_y)
+    wall = Entity(model='cube', scale=(1,5,10), x=2, y=.01, rotation_y=45, collider='box', texture='white_cube')
+    wall.texture_scale = (wall.scale_z, wall.scale_y)
+    wall = Entity(model='cube', scale=(1,5,10), x=-2, y=.01, collider='box', texture='white_cube')
+    wall.texture_scale = (wall.scale_z, wall.scale_y)
 
     player = FirstPersonController(y=2, origin_y=-.5)
     player.gun = None
   
-    gun = Entity(model='assets\m4a1\M4A1.fbx', Texture='', parent=camera, color=color.black, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
-    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.75), color=color.black, collision=True, Collider="box")
-    gun.muzzle_flash = Entity(parent=gun, z=1, world_scale=.5, model='quad', color=color.yellow, enabled=False)
+    gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg',parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
+    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.75), color=color.black, collision=True)
 
     slope = Entity(model='cube', collider='box', position=(0,0,8), scale=6, rotation=(45,0,0), texture='brick', texture_scale=(8,8))
     slope = Entity(model='cube', collider='box', position=(5,0,10), scale=6, rotation=(80,0,0), texture='brick', texture_scale=(8,8))
@@ -146,15 +145,21 @@ if __name__ == '__main__':
     
 
     shootables_parent = Entity()
-    mouse.traverse_target = shootables_parent
-    
+    mouse.traverse_target = shootables_parent  
 
+    bullet=None
     def shoot():
-
-        bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.black)
+        global bullet
+        bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.black, collision=True, collider="box")
         bullet.world_parent = scene
-        bullet.animate_position(bullet.position+(bullet.forward*2500), curve=curve.linear, duration=1)
+        bullet.animate_position(bullet.position+(bullet.forward*250), curve=curve.linear, duration=1)
         destroy(bullet, delay=1)
+        M4A1_gunfire.play()
+        Cartridge.play()
+    
+    def hit():
+        if bullet.intersects(wall,slope).hit:
+            destroy(bullet)
     
     class Enemy(Entity):
         def __init__(self, **kwargs):
@@ -184,16 +189,11 @@ if __name__ == '__main__':
             gullet.position=(0,-0.124,1)
             if held_keys['left mouse']:
                 shoot()
-                M4A1_gunfire.play()
-                Cartridge.play()
-                Audio
         else:
             gun.position=(0.25,-0.15,0.5)
             gullet.position=(0.25,-0.1,0.75)
             if held_keys['left mouse']:
                 shoot()
-                M4A1_gunfire.play()
-                Cartridge.play()
 
     aim = Entity(input=aim)
 
