@@ -135,7 +135,7 @@ if __name__ == '__main__':
     player.gun = None
   
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg',parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
-    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.75), color=color.black, collision=True)
+    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.white, collision=True, visible=False)
 
     slope = Entity(model='cube', collider='box', position=(0,0,8), scale=6, rotation=(45,0,0), texture='brick', texture_scale=(8,8))
     slope = Entity(model='cube', collider='box', position=(5,0,10), scale=6, rotation=(80,0,0), texture='brick', texture_scale=(8,8))
@@ -191,7 +191,7 @@ if __name__ == '__main__':
                 shoot()
         else:
             gun.position=(0.25,-0.15,0.5)
-            gullet.position=(0.25,-0.1,0.75)
+            gullet.position=(0.25,-0.1,0.95)
             if held_keys['left mouse']:
                 shoot()
 
