@@ -135,7 +135,7 @@ if __name__ == '__main__':
     player.gun = None
   
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
-    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.75), color=color.black, collision=True)
+    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
     suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
 
 
@@ -159,12 +159,6 @@ if __name__ == '__main__':
     def hit():
         if bullet.intersects(wall,slope).hit:
             destroy(bullet)
-    
-    class Enemy(Entity):
-        def __init__(self, **kwargs):
-            super().__init__(parent=shootables_parent, model='cube', scale_y=2, origin_y=-.5, color=color.light_gray, collider='box', **kwargs)
-            self.max_hp = 100
-            self.hp = self.max_hp
 
         @property
         def hp(self):
@@ -176,8 +170,6 @@ if __name__ == '__main__':
             if value <= 0:
                 destroy(self)
                 return
-    
-    enemies = [Enemy(x=x*4) for x in range(4)]
 
     M4A1_gunfire=Audio("assets\GunSounds\M4A1_Gunshot.mp3", volume=0.3)
     Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.3)
