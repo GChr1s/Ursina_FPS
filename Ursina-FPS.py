@@ -135,8 +135,8 @@ if __name__ == '__main__':
     player.gun = None
   
     gun = Entity(model='assets/sr-25/SR-25.fbx', color=color.black, rotation_y=270, parent=camera, position=(0.25,-0.15,0.5), scale=0.00005, on_cooldown=False)
-    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
-    suppressor = Entity(model='assets/Suppressor/source/low.obj', color=color.black, position=(0,-0.1,0.95), parent=camera, scale=1, visible=True)
+    gullet = Entity(model='cube', parent=camera, scale=0.5, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
+    suppressor = Entity(model='assets/Suppressor/source/low.obj', color=color.black, position=(-0.1,0.95), parent=camera, visible=True)
 
     shootables_parent = Entity()
     mouse.traverse_target = shootables_parent  
@@ -151,7 +151,7 @@ if __name__ == '__main__':
         M4A1_gunfire.play()
         Cartridge.play()
 
-    M4A1_gunfire=Audio("assets\GunSounds\M4A1_Gunshot.mp3", volume=0.3)
+    M4A1_gunfire=Audio("assets\GunSounds\sr-25.mp3", volume=0.3)
     Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.3)
     
     def aim(key):
@@ -168,4 +168,4 @@ if __name__ == '__main__':
 
     aim = Entity(input=aim)
 
-    app.run()
+app.run()
