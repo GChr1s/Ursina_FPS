@@ -78,12 +78,6 @@ class FirstPersonController(Entity):
                     self.land()
                 self.grounded = True
 
-                if ray.world_normal.y > .7 and ray.world_point.y - self.world_y < .5: # walk up slope
-                    self.y = ray.world_point[1]
-                return
-            else:
-                self.grounded = False
-
             self.y -= min(self.air_time, ray.distance-.05) * time.dt * 100
             self.air_time += time.dt * .25 * self.gravity
 
@@ -170,4 +164,4 @@ if __name__ == '__main__':
 
     aim = Entity(input=aim)
 
-    app.run()
+app.run()
