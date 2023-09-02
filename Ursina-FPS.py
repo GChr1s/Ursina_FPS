@@ -135,7 +135,7 @@ if __name__ == '__main__':
     player.gun = None
   
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
-    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
+    gullet = Entity(model='cube', parent=camera, scale=0.0015, rotation_y=270, position=(0.25,-0.1,0.95), visible=False)
     suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
 
 
@@ -149,9 +149,9 @@ if __name__ == '__main__':
     bullet=None
     def shoot():
         global bullet
-        bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.black, collision=True, collider="box")
+        bullet = Entity(parent=gullet, model='assets\m4a1\Bullet.fbx', color=color.orange, scale=0.0015, rotation_y=90, collision=True, collider="box")
         bullet.world_parent = scene
-        bullet.animate_position(bullet.position+(bullet.forward*250), curve=curve.linear, duration=1)
+        bullet.animate_position(bullet.position+(bullet.forward*10000000), curve=curve.linear, duration=1)
         destroy(bullet, delay=1)
         M4A1_gunfire.play()
         Cartridge.play()
