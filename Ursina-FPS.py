@@ -144,7 +144,7 @@ if __name__ == '__main__':
     bullet=None
     def shoot():
         global bullet
-        bullet = Entity(parent=gullet, model='assets\m4a1\Bullet.fbx', color=color.orange, scale=0.0015, rotation_y=90, collision=True, collider="box")
+        bullet = Entity(parent=gullet, model='assets\m4a1\Bullet.fbx', color=color.orange, scale=0.0015, rotation_y=90)
         bullet.world_parent = scene
         bullet.animate_position(bullet.position+(bullet.forward*10000000), curve=curve.linear, duration=1)
         destroy(bullet, delay=1)
