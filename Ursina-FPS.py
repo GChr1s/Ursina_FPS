@@ -78,6 +78,12 @@ class FirstPersonController(Entity):
                     self.land()
                 self.grounded = True
 
+                if ray.world_normal.y > .7 and ray.world_point.y - self.world_y < .5: # walk up slope
+                    self.y = ray.world_point[1]
+                return
+            else:
+                self.grounded = False
+
             self.y -= min(self.air_time, ray.distance-.05) * time.dt * 100
             self.air_time += time.dt * .25 * self.gravity
 
@@ -129,23 +135,21 @@ if __name__ == '__main__':
     player.gun = None
   
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
-    gullet = Entity(model='cube', parent=camera, scale=0.0015, rotation_y=270, position=(0.25,-0.1,0.95), visible=False)
+    gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
     suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
-    
+
     shootables_parent = Entity()
     mouse.traverse_target = shootables_parent  
 
     bullet=None
     def shoot():
         global bullet
-        bullet = Entity(parent=gullet, model='assets\m4a1\Bullet.fbx', color=color.orange, scale=0.0015, rotation_y=90, collision=True, collider="box")
+        bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.black, collision=True, collider="box")
         bullet.world_parent = scene
-        bullet.animate_position(bullet.position+(bullet.forward*10000000), curve=curve.linear, duration=1)
+        bullet.animate_position(bullet.position+(bullet.forward*250), curve=curve.linear, duration=1)
         destroy(bullet, delay=1)
         M4A1_gunfire.play()
         Cartridge.play()
-        if bullet.intersects(wall).hit:
-            destroy(bullet)
 
     M4A1_gunfire=Audio("assets\GunSounds\M4A1_Gunshot.mp3", volume=0.3)
     Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.3)
@@ -164,4 +168,4 @@ if __name__ == '__main__':
 
     aim = Entity(input=aim)
 
-app.run()
+    app.run()
