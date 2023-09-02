@@ -144,14 +144,25 @@ if __name__ == '__main__':
     bullet=None
     def shoot():
         global bullet
-        bullet = Entity(parent=gullet, model=Cube, color=color.orange, scale=0.0015, rotation_y=90, collision=True, collider="box")
+        bullet = Entity(parent=gullet, model='assets\m4a1\Bullet.fbx', color=color.orange, scale=0.0015, rotation_y=90, collision=True, collider="box")
         bullet.world_parent = scene
-        bullet.animate_position(bullet.position+(bullet.forward*2500), curve=curve.linear, duration=1)
+        bullet.animate_position(bullet.position+(bullet.forward*10000000), curve=curve.linear, duration=1)
         destroy(bullet, delay=1)
         M4A1_gunfire.play()
         Cartridge.play()
         if bullet.intersects(wall).hit:
             destroy(bullet)
+
+        @property
+        def hp(self):
+            return self._hp
+
+        @hp.setter
+        def hp(self, value):
+            self._hp = value
+            if value <= 0:
+                destroy(self)
+                return
 
     M4A1_gunfire=Audio("assets\GunSounds\M4A1_Gunshot.mp3", volume=0.3)
     Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.3)
