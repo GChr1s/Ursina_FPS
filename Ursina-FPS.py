@@ -150,7 +150,7 @@ if __name__ == '__main__':
         destroy(bullet, delay=1)
         M4A1_gunfire.play()
         Cartridge.play()
-        if bullet.intersects(wall,slope).hit:
+        if bullet.intersects(wall).hit:
             destroy(bullet)
 
         @property
