@@ -190,7 +190,7 @@ if __name__ == '__main__':
                 shoot()
         else:
             gun.position=(0.25,-0.15,0.5)
-            gullet.position=(0.25,-0.1,0.75)
+            gullet.position=(0.25,-0.1,0.95)
             if held_keys['left mouse']:
                 shoot()
 
