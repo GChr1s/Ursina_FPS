@@ -137,12 +137,7 @@ if __name__ == '__main__':
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
     gullet = Entity(model='cube', parent=camera, scale=0.0015, rotation_y=270, position=(0.25,-0.1,0.95), visible=False)
     suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
-
-
-    hookshot_target = Button(parent=scene, model='cube', color=color.brown, position=(4,5,5))
-    hookshot_target.on_click = Func(player.animate_position, hookshot_target.position, duration=.5, curve=curve.linear)
     
-
     shootables_parent = Entity()
     mouse.traverse_target = shootables_parent  
 
@@ -155,8 +150,6 @@ if __name__ == '__main__':
         destroy(bullet, delay=1)
         M4A1_gunfire.play()
         Cartridge.play()
-    
-    def hit():
         if bullet.intersects(wall,slope).hit:
             destroy(bullet)
 
