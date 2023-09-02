@@ -120,7 +120,7 @@ if __name__ == '__main__':
     app = Ursina()
     
     ground = Entity(model='plane', scale=(100,1,100), color=color.green, texture='grass', texture_scale=(100,100), collider='box')
-    wall = Entity(model='cube', scale=(1,5,10), x=2, y=.01, rotation_y=45, collider='box', texture='white_cube')
+    wall = Entity(model='cube', scale=(10,5,100), x=30, y=.01, collider='box', texture='white_cube')
     wall.texture_scale = (wall.scale_z, wall.scale_y)
     wall = Entity(model='cube', scale=(1,5,10), x=-2, y=.01, collider='box', texture='white_cube')
     wall.texture_scale = (wall.scale_z, wall.scale_y)
@@ -128,10 +128,10 @@ if __name__ == '__main__':
     player = FirstPersonController(y=2, origin_y=-.5)
     player.gun = None
   
-    gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
-    gullet = Entity(model='cube', parent=camera, scale=0.0015, rotation_y=270, position=(0.25,-0.1,0.95), visible=False)
-    suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
-    
+    gun = Entity(model='assets/sr-25/SR-25.fbx', color=color.black, rotation_y=270, parent=camera, position=(0.25,-0.15,0.5), scale=0.00005, on_cooldown=False)
+    gullet = Entity(model='cube', parent=camera, scale=0.5, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
+    suppressor = Entity(model='assets/Suppressor/source/low.obj', color=color.black, position=(-0.1,0.95), parent=camera, visible=True)
+
     shootables_parent = Entity()
     mouse.traverse_target = shootables_parent  
 
@@ -147,7 +147,7 @@ if __name__ == '__main__':
         if bullet.intersects(wall).hit:
             destroy(bullet)
 
-    M4A1_gunfire=Audio("assets\GunSounds\M4A1_Gunshot.mp3", volume=0.3)
+    M4A1_gunfire=Audio("assets\GunSounds\sr-25.mp3", volume=0.3)
     Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.3)
     
     def aim(key):
