@@ -153,17 +153,6 @@ if __name__ == '__main__':
         if bullet.intersects(wall).hit:
             destroy(bullet)
 
-        @property
-        def hp(self):
-            return self._hp
-
-        @hp.setter
-        def hp(self, value):
-            self._hp = value
-            if value <= 0:
-                destroy(self)
-                return
-
     M4A1_gunfire=Audio("assets\GunSounds\M4A1_Gunshot.mp3", volume=0.3)
     Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.3)
     
