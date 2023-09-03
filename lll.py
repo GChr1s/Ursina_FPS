@@ -160,15 +160,18 @@ def aim(self, **kwargs):
         gullet.position=(0,-0.124,1)
         if held_keys['left mouse']:
             shoot()
-    elif held_keys['w'or'a'or's'or'd']:
+    elif held_keys['w']:
         gun.position=(0.1,-0.25,0.4)
         gun.rotation=(25, -70, 0)
-        if held_keys['shift']:
-            class FirstPersonController(Entity):
-                def __init__(self, **kwargs):
-                    super().__init__()
-                    self.speed = 10
-                    return
+    elif held_keys['a']:
+        gun.position=(0.1,-0.25,0.4)
+        gun.rotation=(25, -70, 0)
+    elif held_keys['s']:
+        gun.position=(0.1,-0.25,0.4)
+        gun.rotation=(25, -70, 0)
+    elif held_keys['d']:
+        gun.position=(0.1,-0.25,0.4)
+        gun.rotation=(25, -70, 0)
     else:
         gun.position=(0.25,-0.15,0.5)
         gun.rotation=(0,0,0)
