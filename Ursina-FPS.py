@@ -159,10 +159,7 @@ def reload():
 
 def aim(key):
     if held_keys['right mouse']:
-        gun.position=(0,-0.124,0.3)
-        gullet.position=(0,-0.124,1)
-        if held_keys['left mouse']:
-            shoot()
+        camera.animate("fov", camera.fov-30, duration = 2, delay=0, auto_destroy = True)
     else:
         gun.position=(0.25,-0.15,0.5)
         gullet.position=(0.25,-0.1,0.95)
