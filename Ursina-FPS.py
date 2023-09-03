@@ -125,11 +125,11 @@ if __name__ == '__main__':
     window.vsync = False
     app = Ursina()
     
-    ground = Entity(model='plane', scale=(100,1,100), color=color.green, texture='grass', texture_scale=(100,100), collider='box')
-    wall = Entity(model='cube', scale=(1,5,10), x=2, y=.01, rotation_y=45, collider='box', texture='white_cube')
-    wall.texture_scale = (wall.scale_z, wall.scale_y)
-    wall = Entity(model='cube', scale=(1,5,10), x=-2, y=.01, collider='box', texture='white_cube')
-    wall.texture_scale = (wall.scale_z, wall.scale_y)
+    ground = Entity(model='plane', scale=(100,1,100), texture='textures\doro.jpg', texture_scale=(1,1), collider='box')
+    apt = Entity(model='cube', scale=(5,100,10),position=(5,50,10), collider='box', texture='white_cube')
+    apt.texture_scale = (apt.scale_z, apt.scale_y)
+    apt = Entity(model='cube', scale=(1,5,10), x=-2, y=.01, collider='box', texture='white_cube')
+    apt.texture_scale = (apt.scale_z, apt.scale_y)
 
     player = FirstPersonController(y=2, origin_y=-.5)
     player.gun = None
