@@ -132,7 +132,8 @@ def shoot():
     destroy(bullet, delay=1)
     M4A1_gunfire.play()
     Cartridge.play()
-    camera.shake(0.1,0.25)
+    camera.shake(0.1,0.1)
+    gun.shake(0.1,0.05)
 
 M4A1_gunfire=Audio("assets\GunSounds\m4a1_gunshot.mp3", volume=0.3)
 Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.3)
