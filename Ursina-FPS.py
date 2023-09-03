@@ -43,7 +43,6 @@ class FirstPersonController(Entity):
             if ray.hit:
                 self.y = ray.world_point.y
 
-
     def update(self):
         self.rotation_y += mouse.velocity[0] * self.mouse_sensitivity[1]
 
@@ -54,21 +53,6 @@ class FirstPersonController(Entity):
             self.forward * (held_keys['w'] - held_keys['s'])
             + self.right * (held_keys['d'] - held_keys['a'])
             ).normalized()
-
-        feet_ray = raycast(self.position+Vec3(0,0.5,0), self.direction, traverse_target=self.traverse_target, ignore=self.ignore_list, distance=.5, debug=False)
-        head_ray = raycast(self.position+Vec3(0,self.height-.1,0), self.direction, traverse_target=self.traverse_target, ignore=self.ignore_list, distance=.5, debug=False)
-        if not feet_ray.hit and not head_ray.hit:
-            move_amount = self.direction * time.dt * self.speed
-
-            if raycast(self.position+Vec3(-.0,1,0), Vec3(1,0,0), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
-                move_amount[0] = min(move_amount[0], 0)
-            if raycast(self.position+Vec3(-.0,1,0), Vec3(-1,0,0), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
-                move_amount[0] = max(move_amount[0], 0)
-            if raycast(self.position+Vec3(-.0,1,0), Vec3(0,0,1), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
-                move_amount[2] = min(move_amount[2], 0)
-            if raycast(self.position+Vec3(-.0,1,0), Vec3(0,0,-1), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
-                move_amount[2] = max(move_amount[2], 0)
-            self.position += move_amount
 
         if self.gravity:
             ray = raycast(self.world_position+(0,self.height,0), self.down, traverse_target=self.traverse_target, ignore=self.ignore_list)
@@ -87,11 +71,9 @@ class FirstPersonController(Entity):
             self.y -= min(self.air_time, ray.distance-.05) * time.dt * 100
             self.air_time += time.dt * .25 * self.gravity
 
-
     def input(self, key):
         if key == 'space':
             self.jump()
-
 
     def jump(self):
         if not self.grounded:
@@ -101,7 +83,6 @@ class FirstPersonController(Entity):
         self.animate_y(self.y+self.jump_height, self.jump_up_duration, resolution=int(1//time.dt), curve=curve.out_expo)
         invoke(self.start_fall, delay=self.fall_after)
 
-
     def start_fall(self):
         self.y_animator.pause()
         self.jumping = False
@@ -109,16 +90,6 @@ class FirstPersonController(Entity):
     def land(self):
         self.air_time = 0
         self.grounded = True
-
-
-    def on_enable(self):
-        mouse.locked = True
-        self.cursor.enabled = True
-
-
-    def on_disable(self):
-        mouse.locked = False
-        self.cursor.enabled = False
 
 if __name__ == '__main__':
     from ursina.prefabs.first_person_controller import FirstPersonController
@@ -146,7 +117,7 @@ if __name__ == '__main__':
         global bullet
         bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.black, collision=True, collider="box")
         bullet.world_parent = scene
-        bullet.animate_position(bullet.position+(bullet.forward*250), curve=curve.linear, duration=1)
+        bullet.animate_position(bullet.position+(bullet.forward*2500), curve=curve.linear, duration=1)
         destroy(bullet, delay=1)
         M4A1_gunfire.play()
         Cartridge.play()
