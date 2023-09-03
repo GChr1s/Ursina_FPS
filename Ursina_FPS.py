@@ -1,10 +1,17 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
+<<<<<<< HEAD
 from ursina import curve
 app = Ursina()
 window.vsync = False
 #import menu
+=======
+# from menu import menu
+
+app = Ursina()
+window.vsync = False
+>>>>>>> 36b0e3e0810ed79da96553b499e751d5c028b46e
 random.seed(0)
 Entity.default_shader = lit_with_shadows_shader
 sun = DirectionalLight()
@@ -148,17 +155,23 @@ Reloading=Audio("assets/GunSounds/reload.mp3")
         
 def reload():
     if held_keys['r']:
+        gullet.enabled = False
         gun.position=(0.1,-0.25,0.4)
         gun.rotation=(25, -70, 0)
         Reloading.play()
 
 def aim():
     if held_keys['right mouse']:
+<<<<<<< HEAD
         gun.animate_rotation((-20, 0, 0), duration = 0.1, curve = curve.linear)
         gun.animate("z", 1.2, duration = 0.03, curve = curve.linear)
         gun.animate("z", 1.5, 0.2, delay = 0.1, curve = curve.linear)
         gun.animate_rotation((-10, 0, 0), 0.2, delay = 0.1, curve = curve.linear)
         gun.animate_rotation((0, 0, 0), 0.4, delay = 0.12, curve = curve.linear)
+=======
+        gun.position=(0,-0.124,0.3)
+        gullet.position=(0,-0.124,1)
+>>>>>>> 36b0e3e0810ed79da96553b499e751d5c028b46e
     else:
         gun.position=(0.25,-0.15,0.5)
         gullet.position=(0.25,-0.1,0.95)
