@@ -149,7 +149,7 @@ def reload():
     if key == 'r':
         gun.position=(0.1,-0.25,0.4)
         gun.rotation=(25, -70, 0)
-        Reloading.play() # 스피커 없어서 잘 되는지 안되는지 모름
+        Reloading.play()
 
 def aim(key):
     if held_keys['right mouse']:
