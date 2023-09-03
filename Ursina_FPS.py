@@ -114,6 +114,12 @@ apt = Entity(model='cube', scale=(1,5,10), x=-2, y=.01, collider='box', color=co
 apt.texture_scale = (apt.scale_z, apt.scale_y)
 apt = Entity(model='cube', scale=(5,100,10),position=(15,50,30), collider='box', texture='white_cube')
 apt = Entity(model='cube', scale=(5,100,10),position=(30,50,30), collider='box', texture='white_cube')
+apt = Entity(model='cube', scale=(5,100,10),position=(30,50,15), collider='box', texture='white_cube')
+grass = Entity(model='assets\structure\source\Bush.fbx',scale=0.01,texture='assets\structure\Textures\grass3.png',position=(10,0,10))
+grass = Entity(model='assets\structure\source\Bush.fbx',scale=0.01,texture='assets\structure\Textures\grass3.png',position=(8,0,13))
+strl = Entity(model='assets\structure\source\Streetlights.fbx',scale=0.1,position=(25,0,6.5))
+for i in range(18,51):
+    grass = Entity(model='assets\structure\source\Bush.fbx',scale=0.01,texture='assets\structure\Textures\grass3.png',position=(i,0,6.5))
 player = FirstPersonController(y=2, origin_y=-.5)
 player.gun = None
   
@@ -148,10 +154,7 @@ def reload():
 
 def aim(key):
     if held_keys['right mouse']:
-        gun.position=(0,-0.124,0.3)
-        gullet.position=(0,-0.124,1)
-        if held_keys['left mouse']:
-            shoot()
+        camera.animate("fov", camera.fov-30, duration = 2, delay=0, auto_destroy = True)
     else:
         gun.position=(0.25,-0.15,0.5)
         gullet.position=(0.25,-0.1,0.95)
