@@ -14,7 +14,7 @@ Sky()
 class FirstPersonController(Entity):
     def __init__(self, **kwargs):
         super().__init__()
-        self.speed = 10
+        self.speed = 100
         self.height = 2
         self.camera_pivot = Entity(parent=self, y=self.height)
 
@@ -144,7 +144,7 @@ def reload():
         gun.rotation=(25, -70, 0)
         Reloading.play()
 
-def aim(key):
+def aim(self, **kwargs):
     def shoot():
         bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.black, collision=True, collider="box")
         bullet.world_parent = scene
@@ -163,6 +163,12 @@ def aim(key):
     elif held_keys['w'or'a'or's'or'd']:
         gun.position=(0.1,-0.25,0.4)
         gun.rotation=(25, -70, 0)
+        if held_keys['shift']:
+            class FirstPersonController(Entity):
+                def __init__(self, **kwargs):
+                    super().__init__()
+                    self.speed = 10
+                    return
     else:
         gun.position=(0.25,-0.15,0.5)
         gun.rotation=(0,0,0)
