@@ -156,7 +156,7 @@ def aim(self, **kwargs):
         gun.shake(0.1,0.05)
     if held_keys['right mouse']:
         gun.rotation=(0,0,0)
-        gun.position=(0,-0.124,0.3)
+        gun.animate_position=(0,-0.124,0.3, duration)
         gullet.position=(0,-0.124,1)
         if held_keys['left mouse']:
             shoot()
