@@ -1,9 +1,9 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
-
 app = Ursina()
 window.vsync = False
+
 random.seed(0)
 Entity.default_shader = lit_with_shadows_shader
 sun = DirectionalLight()
@@ -14,7 +14,7 @@ class FirstPersonController(Entity):
     def __init__(self, **kwargs):
         super().__init__()
         self.speed = 5
-        self.height = 20
+        self.height = 2
         self.camera_pivot = Entity(parent=self, y=self.height)
 
         camera.parent = self.camera_pivot
@@ -53,6 +53,21 @@ class FirstPersonController(Entity):
             self.forward * (held_keys['w'] - held_keys['s'])
             + self.right * (held_keys['d'] - held_keys['a'])
             ).normalized()
+
+        feet_ray = raycast(self.position+Vec3(0,0.5,0), self.direction, traverse_target=self.traverse_target, ignore=self.ignore_list, distance=.5, debug=False)
+        head_ray = raycast(self.position+Vec3(0,self.height-.1,0), self.direction, traverse_target=self.traverse_target, ignore=self.ignore_list, distance=.5, debug=False)
+        
+        if not feet_ray.hit and not head_ray.hit:
+            move_amount = self.direction * time.dt * self.speed
+            if raycast(self.position+Vec3(-.0,1,0), Vec3(1,0,0), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
+                move_amount[0] = min(move_amount[0], 0)
+            if raycast(self.position+Vec3(-.0,1,0), Vec3(-1,0,0), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
+                move_amount[0] = max(move_amount[0], 0)
+            if raycast(self.position+Vec3(-.0,1,0), Vec3(0,0,1), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
+                move_amount[2] = min(move_amount[2], 0)
+            if raycast(self.position+Vec3(-.0,1,0), Vec3(0,0,-1), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
+                move_amount[2] = max(move_amount[2], 0)
+            self.position += move_amount
 
         if self.gravity:
             ray = raycast(self.world_position+(0,self.height,0), self.down, traverse_target=self.traverse_target, ignore=self.ignore_list)
