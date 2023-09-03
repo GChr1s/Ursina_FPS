@@ -160,12 +160,12 @@ def aim(key):
         gullet.position=(0,-0.124,1)
         if held_keys['left mouse']:
             shoot()
-    elif key == 'w' or key == 'a' or key == 's' or key == 'd':
+    elif held_keys['w'or'a'or's'or'd']:
         gun.position=(0.1,-0.25,0.4)
         gun.rotation=(25, -70, 0)
     else:
-        gun.rotation=(0,0,0)
         gun.position=(0.25,-0.15,0.5)
+        gun.rotation=(0,0,0)
         gullet.position=(0.25,-0.1,0.95)
         if held_keys['left mouse']:
             shoot()
