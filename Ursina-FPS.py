@@ -13,7 +13,7 @@ Sky()
 class FirstPersonController(Entity):
     def __init__(self, **kwargs):
         super().__init__()
-        self.speed = 5
+        self.speed = 10
         self.height = 2
         self.camera_pivot = Entity(parent=self, y=self.height)
 
@@ -68,6 +68,12 @@ class FirstPersonController(Entity):
             if raycast(self.position+Vec3(-.0,1,0), Vec3(0,0,-1), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
                 move_amount[2] = max(move_amount[2], 0)
             self.position += move_amount
+            
+            if not move_amount == 0:
+                gun.position=(0.1,-0.25,0.4)
+                gun.rotation=(25, -70, 0)
+            else:
+                gun.rotation=(0,0,0)
 
         if self.gravity:
             ray = raycast(self.world_position+(0,self.height,0), self.down, traverse_target=self.traverse_target, ignore=self.ignore_list)
@@ -132,12 +138,19 @@ def shoot():
     destroy(bullet, delay=1)
     M4A1_gunfire.play()
     Cartridge.play()
-    camera.shake(0.1,0.1)
+    camera.shake(0.1,0.2)
     gun.shake(0.1,0.05)
 
 M4A1_gunfire=Audio("assets\GunSounds\m4a1_gunshot.mp3", volume=0.3)
 Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.3)
+Reloading=Audio("assets/GunSounds/reload.mp3")
     
+def reload():
+    if key == 'r':
+        gun.position=(0.1,-0.25,0.4)
+        gun.rotation=(25, -70, 0)
+        Reloading.play()
+
 def aim(key):
     if held_keys['right mouse']:
         gun.position=(0,-0.124,0.3)
