@@ -21,7 +21,7 @@ state_handler = Animator({
 
 def start_game():
     menu_parent.enabled = False
-    
+    # 겜 시작하는 코드 여기 넣으셈
 
 # main menu content
 main_menu.buttons = [
