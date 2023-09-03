@@ -3,6 +3,7 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
 app = Ursina()
 window.vsync = False
+import menu
 
 random.seed(0)
 Entity.default_shader = lit_with_shadows_shader
@@ -68,12 +69,6 @@ class FirstPersonController(Entity):
             if raycast(self.position+Vec3(-.0,1,0), Vec3(0,0,-1), distance=.5, traverse_target=self.traverse_target, ignore=self.ignore_list).hit:
                 move_amount[2] = max(move_amount[2], 0)
             self.position += move_amount
-            
-            if not move_amount == 0:
-                gun.position=(0.1,-0.25,0.4)
-                gun.rotation=(25, -70, 0)
-            else:
-                gun.rotation=(0,0,0)
 
         if self.gravity:
             ray = raycast(self.world_position+(0,self.height,0), self.down, traverse_target=self.traverse_target, ignore=self.ignore_list)
@@ -141,12 +136,12 @@ def shoot():
     camera.shake(0.1,0.2)
     gun.shake(0.1,0.05)
 
-M4A1_gunfire=Audio("assets\GunSounds\m4a1_gunshot.mp3", volume=0.3)
-Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume=0.3)
+M4A1_gunfire=Audio("assets\GunSounds\m4a1_gunshot.mp3")
+Cartridge=Audio("assets\GunSounds\Cartridge.mp3")
 Reloading=Audio("assets/GunSounds/reload.mp3")
     
 def reload():
-    if key == 'r':
+    if held_keys['r']:
         gun.position=(0.1,-0.25,0.4)
         gun.rotation=(25, -70, 0)
         Reloading.play()
