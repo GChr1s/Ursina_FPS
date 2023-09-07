@@ -44,7 +44,7 @@ M4A1_gunfire=Audio("assets\GunSounds\m4a1_gunshot.mp3")
 Cartridge=Audio("assets\GunSounds\Cartridge.mp3")
 Reloading=Audio("assets/GunSounds/reload.mp3")
 
-def aim(self, **kwargs):
+def aim(self):
     def shoot():
         bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.black, collision=True, collider="box")
         bullet.world_parent = scene
