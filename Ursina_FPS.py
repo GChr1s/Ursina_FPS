@@ -40,12 +40,11 @@ mouse.traverse_target = shootables_parent
 bullet=None
 
 
-M4A1_gunfire=Audio("assets\GunSounds\m4a1_gunshot.mp3")
-Cartridge=Audio("assets\GunSounds\Cartridge.mp3")
-Reloading=Audio("assets/GunSounds/reload.mp3")
-
 def aim(self):
     def shoot():
+        M4A1_gunfire=Audio("assets\GunSounds\m4a1_gunshot.mp3")
+        Cartridge=Audio("assets\GunSounds\Cartridge.mp3")
+        Reloading=Audio("assets/GunSounds/reload.mp3")
         bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.black, collision=True, collider="box")
         bullet.world_parent = scene
         bullet.animate_position(bullet.position+(bullet.forward*2500), curve=curve.linear, duration=1)
