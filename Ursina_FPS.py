@@ -12,11 +12,8 @@ sun.look_at(Vec3(1,-1,-1))
 Sky()
 
 
-ground = Entity(model='plane', scale=(100,1,100), texture='textures\doro.jpg', texture_scale=(1,1), collider='box')
+ground = Entity(model='plane', scale=(100,1,100), texture='textures\imsidoro.png', texture_scale=(1,1), collider='box')
 apt = Entity(model='cube', scale=(5,100,10),position=(15,50,15), collider='box', texture='white_cube')
-apt.texture_scale = (apt.scale_z, apt.scale_y)
-apt = Entity(model='cube', scale=(1,5,10), x=-2, y=.01, collider='box', color=color.gray)
-apt.texture_scale = (apt.scale_z, apt.scale_y)
 apt = Entity(model='cube', scale=(5,100,10),position=(15,50,30), collider='box', texture='white_cube')
 apt = Entity(model='cube', scale=(5,100,10),position=(30,50,30), collider='box', texture='white_cube')
 apt = Entity(model='cube', scale=(5,100,10),position=(30,50,15), collider='box', texture='white_cube')
