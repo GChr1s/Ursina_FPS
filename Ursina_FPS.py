@@ -68,6 +68,10 @@ def sg():
 
     bullet=None
 
+    def fullauto():
+            if not gun.on_cooldown:
+                gun.on_cooldown = True
+                invoke(setattr, gun, 'on_cooldown', False, delay=.15)
 
     def aim(self):
         def shoot():
