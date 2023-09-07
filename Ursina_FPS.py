@@ -61,6 +61,7 @@ def aim(self, **kwargs):
         Cartridge.play()
         camera.shake(0.1,0.2)
     if held_keys['right mouse']:
+        player.speed = 5
         gun.rotation=(0,0,0)
         gun.position=(0,-0.124,0.3)
         gullet.position=(0,-0.124,1)
