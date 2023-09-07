@@ -28,7 +28,7 @@ for i in range(18,51):
     grass = Entity(model='assets\structure\source\Bush.fbx',scale=0.01,texture='assets\structure\Textures\grass3.png',position=(i,0,6.5))
 player = FirstPersonController(y=2, origin_y=-.5)
 player.gun = None
-player.speed = 20
+player.speed = 10
   
 gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
 gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
@@ -43,13 +43,6 @@ bullet=None
 M4A1_gunfire=Audio("assets\GunSounds\m4a1_gunshot.mp3")
 Cartridge=Audio("assets\GunSounds\Cartridge.mp3")
 Reloading=Audio("assets/GunSounds/reload.mp3")
-    
-def reload():
-    if held_keys['r']:
-        gullet.enabled = False
-        gun.position=(0.1,-0.25,0.4)
-        gun.rotation=(25, -70, 0)
-        Reloading.play()
 
 def aim(self, **kwargs):
     def shoot():
@@ -67,6 +60,8 @@ def aim(self, **kwargs):
         gullet.position=(0,-0.124,1)
         if held_keys['left mouse']:
             shoot()
+    elif not held_keys['right mouse']:
+        player.speed = 10
     elif held_keys['w']:
         gun.position=(0.1,-0.25,0.4)
         gun.rotation=(25, -70, 0)
