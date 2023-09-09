@@ -133,7 +133,8 @@ def sg():
     gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
     suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
 
-    
+    shootables_parent = Entity()
+    mouse.traverse_target = shootables_parent  
 
     bullet=None
 
