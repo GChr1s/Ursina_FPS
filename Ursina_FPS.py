@@ -37,7 +37,10 @@ def sg():
     sun.look_at(Vec3(1,-1,-1))
     Sky()
 
-
+    barrier = Entity(model='cube',scale = (5,10,100),position=(50,0,0),collider="box",visible=False)
+    barrier = Entity(model='cube',scale = (5,10,100),position=(-50,0,0),collider="box",visible=False)
+    barrier = Entity(model='cube',scale = (100,10,5),position=(0,0,50),collider="box",visible=False)
+    barrier = Entity(model='cube',scale = (100,10,5),position=(0,0,-50),collider="box",visible=False)
     ground = Entity(model='plane', scale=(100,1,100), texture='textures\imsidoro.png', texture_scale=(1,1), collider='box')
     apt = Entity(model='cube', scale=(5,100,10),position=(15,50,15), collider='box', texture='white_cube')
     apt = Entity(model='cube', scale=(5,100,10),position=(15,50,30), collider='box', texture='white_cube')
