@@ -37,14 +37,14 @@ def sg():
     sun.look_at(Vec3(1,-1,-1))
     Sky()
     
-    texturePath = "assets/wall.png"
+    texturePath = "assets/brick.jpg"
 
-    barrier = Entity(model='cube', texture=texturePath, scale = (5,300,100),position=(50,0,0),collider="box")
-    barrier = Entity(model='cube', texture=texturePath, scale = (5,300,100),position=(-50,0,0),collider="box")
-    barrier = Entity(model='cube', texture=texturePath, scale = (100,300,5),position=(0,0,50),collider="box")
-    barrier = Entity(model='cube', texture=texturePath, scale = (100,300,5),position=(0,0,-50),collider="box")
-    roof = Entity(model='cube', texture=texturePath, scale = (100,10,100),position=(0,150,0),collider="box")
-    ground = Entity(model='plane', scale=(100,1,100), texture='textures\imsidoro.png', texture_scale=(1,1), collider='box')
+    barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (5,300,100),position=(50,0,0),collider="box")
+    barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (5,300,100),position=(-50,0,0),collider="box")
+    barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (100,300,5),position=(0,0,50),collider="box")
+    barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (100,300,5),position=(0,0,-50),collider="box")
+    roof = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (100,10,100),position=(0,150,0),collider="box")
+    ground = Entity(model='plane', scale=(100,1,100), texture='textures\imsidoro.png', collider='box')
     apt = Entity(model='cube', scale=(5,100,10),position=(15,50,15), collider='box', texture='white_cube')
     apt = Entity(model='cube', scale=(5,100,10),position=(15,50,30), collider='box', texture='white_cube')
     apt = Entity(model='cube', scale=(5,100,10),position=(30,50,30), collider='box', texture='white_cube')
@@ -85,19 +85,44 @@ def sg():
             Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume = 0.75)
             bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.lime,  collision=True, collider="box")
             bullet.world_parent = scene
-            bullet.animate_position(bullet.position+(bullet.forward*1500), curve=curve.linear, duration=1)
+            bullet.animate_position(bullet.position+(bullet.forward*2500), curve=curve.linear, duration=1)
             destroy(bullet, delay=1)
             M4A1_gunfire.play()
             Cartridge.play()
             camera.shake(0.1,0.2)
-        if held_keys['right mouse']:
-            player.speed = 5
-            gun.rotation=(0,0,0)
-            gun.position=(0,-0.124,0.3)
-            gullet.position=(0,-0.124,1)
-            if held_keys['left mouse']:
-                shoot()
-        elif not held_keys['right mouse']:
+        def rm():
+            if held_keys['right mouse']:
+                player.speed = 5
+                gun.rotation=(0,0,0)
+                gun.position=(0,-0.124,0.3)
+                gullet.position=(0,-0.124,1)
+                if held_keys['left mouse']:
+                    shoot()
+            elif not held_keys['right mouse']:
+                player.speed = 10
+                if held_keys['w']:
+                    gun.position=(0.1,-0.25,0.4)
+                    gun.rotation=(25, -70, 0)
+                elif held_keys['a']:
+                    gun.position=(0.1,-0.25,0.4)
+                    gun.rotation=(25, -70, 0)
+                elif held_keys['s']:
+                    gun.position=(0.1,-0.25,0.4)
+                    gun.rotation=(25, -70, 0)
+                elif held_keys['d']:
+                    gun.position=(0.1,-0.25,0.4)
+                    gun.rotation=(25, -70, 0)
+                else:
+                    gun.position=(0.25,-0.15,0.5)
+                    gun.rotation=(0,0,0)
+                    gullet.position=(0.25,-0.1,0.95)
+                    if held_keys['left mouse']:
+                        shoot()
+            
+        
+        if held_keys['shift']:
+            player.speed = 20
+        elif not held_keys['shift']:
             player.speed = 10
             if held_keys['w']:
                 gun.position=(0.1,-0.25,0.4)
@@ -117,6 +142,7 @@ def sg():
                 gullet.position=(0.25,-0.1,0.95)
                 if held_keys['left mouse']:
                     shoot()
+            rm()
         elif held_keys['w']:
             gun.position=(0.1,-0.25,0.4)
             gun.rotation=(25, -70, 0)
@@ -135,7 +161,6 @@ def sg():
             gullet.position=(0.25,-0.1,0.95)
             if held_keys['left mouse']:
                 shoot()
-
     aim = Entity(input=aim)
     
 def start_game():
