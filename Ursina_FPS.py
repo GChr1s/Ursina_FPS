@@ -36,12 +36,14 @@ def sg():
     sun = DirectionalLight()
     sun.look_at(Vec3(1,-1,-1))
     Sky()
+    
+    texturePath = "assets/wall.png"
 
-    barrier = Entity(model='cube', texture='assets/brick.jpg', scale = (5,300,100),position=(50,0,0),collider="box")
-    barrier = Entity(model='cube', texture='assets/brick.jpg', scale = (5,300,100),position=(-50,0,0),collider="box")
-    barrier = Entity(model='cube', texture='assets/brick.jpg', scale = (100,300,5),position=(0,0,50),collider="box")
-    barrier = Entity(model='cube', texture='assets/brick.jpg', scale = (100,300,5),position=(0,0,-50),collider="box")
-    roof = Entity(model='cube', texture='assets/brick.jpg', scale = (100,10,100),position=(0,150,0),collider="box")
+    barrier = Entity(model='cube', texture=texturePath, scale = (5,300,100),position=(50,0,0),collider="box")
+    barrier = Entity(model='cube', texture=texturePath, scale = (5,300,100),position=(-50,0,0),collider="box")
+    barrier = Entity(model='cube', texture=texturePath, scale = (100,300,5),position=(0,0,50),collider="box")
+    barrier = Entity(model='cube', texture=texturePath, scale = (100,300,5),position=(0,0,-50),collider="box")
+    roof = Entity(model='cube', texture=texturePath, scale = (100,10,100),position=(0,150,0),collider="box")
     ground = Entity(model='plane', scale=(100,1,100), texture='textures\imsidoro.png', texture_scale=(1,1), collider='box')
     apt = Entity(model='cube', scale=(5,100,10),position=(15,50,15), collider='box', texture='white_cube')
     apt = Entity(model='cube', scale=(5,100,10),position=(15,50,30), collider='box', texture='white_cube')
