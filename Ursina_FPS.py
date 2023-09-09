@@ -79,7 +79,7 @@ def sg():
     suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
 
     shootables_parent = Entity()
-    mouse.traverse_target = shootables_parent  
+    mouse.traverse_target = shootables_parent
 
     bullet=None
 
