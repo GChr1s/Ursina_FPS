@@ -92,6 +92,7 @@ def sg():
             camera.shake(0.1,0.2)
         def rm():
             if held_keys['right mouse']:
+                camera.animate("fov", camera.fov-30, duration = 0.1, delay=0, auto_destroy = True)
                 player.speed = 5
                 gun.rotation=(0,0,0)
                 gun.position=(0,-0.124,0.3)
@@ -99,6 +100,7 @@ def sg():
                 if held_keys['left mouse']:
                     shoot()
             elif not held_keys['right mouse']:
+                camera.animate("fov", camera.fov+30, duration = 0.1, delay=0, auto_destroy = True)
                 player.speed = 10
                 if held_keys['w']:
                     gun.position=(0.1,-0.25,0.4)
