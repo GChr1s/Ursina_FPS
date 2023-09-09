@@ -39,10 +39,11 @@ def sg():
     
     texturePath = "assets/brick.jpg"
 
-    for i in range(0,30,1):
+    for i in range(0,18,1):
         parkour = Entity(model='cube',scale=(2,2,5),position=(45-5*i,1+2*i,45), collider="box")
         hitbox =Entity(model='cube',scale=(2.5,2,5.5),position=(45-5*i,1+2*i,45),collider="box",visible=False)
-
+    parkour = Entity(model='cube',scale=(5,2,5),position=(-45,35,45), collider="box")
+    hitbox =Entity(model='cube',scale=(5.5,2,5.5),position=(-45,35,45),collider="box",visible=False)
 
     barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (5,300,100),position=(50,0,0),collider="box")
     barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (5,300,100),position=(-50,0,0),collider="box")
@@ -129,7 +130,7 @@ def sg():
                 straight()
         
         if held_keys['shift']:
-            player.speed = 15
+            player.speed = 100
             straight()
         if not held_keys['shift']:
             player.speed = 10
