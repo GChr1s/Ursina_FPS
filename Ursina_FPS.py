@@ -2,6 +2,7 @@ from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
 from ursina import curve
+
 app = Ursina()
 window.vsync = False
 #import menu
@@ -89,7 +90,7 @@ def sg():
             destroy(bullet, delay=1)
             M4A1_gunfire.play()
             Cartridge.play()
-            camera.shake(0.1,0.2)
+            gun.shake(0.1,0.02)
         if held_keys['right mouse']:
             player.speed = 5
             gun.rotation=(0,0,0)
