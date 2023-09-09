@@ -84,7 +84,6 @@ def sg():
             M4A1_gunfire.play()
             Cartridge.play()
             camera.shake(0.1,0.2)
-            gun.shake(0.1,0.05)
         if held_keys['right mouse']:
             player.speed = 5
             gun.rotation=(0,0,0)
