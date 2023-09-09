@@ -130,7 +130,7 @@ def sg():
                 straight()
         
         if held_keys['shift']:
-            player.speed = 100
+            player.speed = 15
             straight()
         if not held_keys['shift']:
             player.speed = 10
