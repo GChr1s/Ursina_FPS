@@ -149,8 +149,7 @@ def sg():
             M4A1_gunfire.play()
             Cartridge.play()
             gun.shake(0.1,0.03)
-            from ursina.prefabs.ursfx import ursfx
-            ursfx([(0.0, 0.0), (0.1, 0.9), (0.15, 0.75), (0.3, 0.14), (0.6, 0.0)], volume=0.5, wave='noise', pitch=random.uniform(-13,-12), pitch_change=-12, speed=3.0)
+            
 
 
         def straight():
