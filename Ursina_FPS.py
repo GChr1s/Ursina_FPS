@@ -148,7 +148,7 @@ for i, e in enumerate(main_menu.buttons):
     e.y = (-i-2) * button_spacing
 
 # options menu content
-volume_slider = Slider(0, 10, default=5, step=1, text='Volume', parent=options_menu, x=-.25)
+volume_slider = Slider(0, 10, default=10, step=1, text='Volume', parent=options_menu, x=-.25)
 def set_volume_multiplier():
     Audio.volume_multiplier = volume_slider.value
 volume_slider.on_value_changed = set_volume_multiplier
