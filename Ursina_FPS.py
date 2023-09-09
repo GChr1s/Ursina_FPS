@@ -2,7 +2,6 @@ from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
 from ursina import curve
-
 app = Ursina()
 window.vsync = False
 #import menu
@@ -90,15 +89,42 @@ def sg():
             destroy(bullet, delay=1)
             M4A1_gunfire.play()
             Cartridge.play()
-            gun.shake(0.1,0.02)
-        if held_keys['right mouse']:
-            player.speed = 5
-            gun.rotation=(0,0,0)
-            gun.position=(0,-0.124,0.3)
-            gullet.position=(0,-0.124,1)
-            if held_keys['left mouse']:
-                shoot()
-        elif not held_keys['right mouse']:
+            gun.shake(0.1,0.03)
+        def rm():
+            if held_keys['right mouse']:
+                camera.animate("fov", camera.fov-30, duration = 0.1, delay=0)
+                player.speed = 5
+                gun.rotation=(0,0,0)
+                gun.position=(0,-0.124,0.3)
+                gullet.position=(0,-0.124,1)
+                if held_keys['left mouse']:
+                    shoot()
+            elif not held_keys['right mouse']:
+                camera.animate("fov", camera.fov+30, duration = 0.1, delay=0)
+                player.speed = 10
+                if held_keys['w']:
+                    gun.position=(0.1,-0.25,0.4)
+                    gun.rotation=(25, -70, 0)
+                elif held_keys['a']:
+                    gun.position=(0.1,-0.25,0.4)
+                    gun.rotation=(25, -70, 0)
+                elif held_keys['s']:
+                    gun.position=(0.1,-0.25,0.4)
+                    gun.rotation=(25, -70, 0)
+                elif held_keys['d']:
+                    gun.position=(0.1,-0.25,0.4)
+                    gun.rotation=(25, -70, 0)
+                else:
+                    gun.position=(0.25,-0.15,0.5)
+                    gun.rotation=(0,0,0)
+                    gullet.position=(0.25,-0.1,0.95)
+                    if held_keys['left mouse']:
+                        shoot()
+            
+        
+        if held_keys['shift']:
+            player.speed = 20
+        elif not held_keys['shift']:
             player.speed = 10
             if held_keys['w']:
                 gun.position=(0.1,-0.25,0.4)
