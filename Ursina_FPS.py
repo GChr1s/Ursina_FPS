@@ -4,6 +4,7 @@ from ursina.shaders import lit_with_shadows_shader
 from ursina import curve
 from ursina.prefabs.health_bar import HealthBar
 
+
 app = Ursina()
 window.vsync = False
 #import menu
@@ -41,6 +42,7 @@ def sg():
     
     texturePath = "assets/brick.jpg"
 
+    
     for i in range(0,18,1):
         parkour = Entity(model='cube',scale=(2,2,5),position=(45-5*i,1+2*i,45), collider="box")
         hitbox =Entity(model='cube',scale=(2.5,2,5.5),position=(45-5*i,1+2*i,45),collider="box",visible=False)
@@ -50,7 +52,13 @@ def sg():
     for i in range(0,18,1):
         parkour = Entity(model='cube',scale=(5,2,2),position=(-45,35+2*i,45-5*i), collider="box")
         hitbox =Entity(model='cube',scale=(5.5,2,2.5),position=(-45,35+2*i,45-5*i),collider="box",visible=False)
-
+    parkour = Entity(model='cube',scale=(5,2,5),position=(45,1,45), collider="box")
+    hitbox =Entity(model='cube',scale=(5.5,2,5.5),position=(45,1,45),collider="box",visible=False)
+    parkour = Entity(model='cube',scale=(5,2,5),position=(-45,35,45), collider="box")
+    hitbox =Entity(model='cube',scale=(5.5,2,5.5),position=(-45,35,45),collider="box",visible=False)
+    parkour = Entity(model='cube',scale=(5,2,5),position=(45,35,-45), collider="box")
+    hitbox =Entity(model='cube',scale=(5.5,2,5.5),position=(45,35,-45),collider="box",visible=False)
+    
     barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (5,300,100),position=(50,0,0),collider="box")
     barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (5,300,100),position=(-50,0,0),collider="box")
     barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (100,300,5),position=(0,0,50),collider="box")
@@ -73,17 +81,59 @@ def sg():
     apt = Entity(model='cube', scale=(5,100,10),position=(15,50,-30), collider='box', texture='white_cube')
     apt = Entity(model='cube', scale=(5,100,10),position=(30,50,-30), collider='box', texture='white_cube')
     apt = Entity(model='cube', scale=(5,100,10),position=(30,50,-15), collider='box', texture='white_cube')
-    player = FirstPersonController(y=2, origin_y=-.5)
+    player = FirstPersonController(model='cube', z=-10, color=color.orange, origin_y=-.5, speed=8, collider='box',visbile=False)
+    player.collider = BoxCollider(player, Vec3(0,1,0), Vec3(1,2,1))
     player.gun = None
-    
     player.speed = 10
+
+    shootables_parent = Entity()
+    mouse.traverse_target = shootables_parent
+
+    class Enemy(Entity):
+        def __init__(self, **kwargs):
+            super().__init__(parent=shootables_parent, model='cube', scale_y=2, origin_y=-.5, color=color.light_gray, collider='box', **kwargs)
+            self.health_bar = Entity(parent=self, y=1.2, model='cube', color=color.red, world_scale=(1.5,.1,.1))
+            self.max_hp = 100
+            self.hp = self.max_hp
+
+        def update(self):
+            dist = distance_xz(player.position, self.position)
+            if dist > 40:
+                return
+
+            self.health_bar.alpha = max(0, self.health_bar.alpha - time.dt)
+
+
+            self.look_at_2d(player.position, 'y')
+            hit_info = raycast(self.world_position + Vec3(0,1,0), self.forward, 30, ignore=(self,))
+            # print(hit_info.entity)
+            if hit_info.entity == player:
+                if dist > 2:
+                    self.position += self.forward * time.dt * 5
+
+        @property
+        def hp(self):
+            return self._hp
+
+        @hp.setter
+        def hp(self, value):
+            self._hp = value
+            if value <= 0:
+                destroy(self)
+                return
+
+            self.health_bar.world_scale_x = self.hp / self.max_hp * 1.5
+            self.health_bar.alpha = 1
+
+    # Enemy()
+    enemies = [Enemy(x=x*4) for x in range(4)]
+
 
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
     gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
     suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
 
-    shootables_parent = Entity()
-    mouse.traverse_target = shootables_parent  
+    
 
     bullet=None
 
@@ -98,6 +148,10 @@ def sg():
             M4A1_gunfire.play()
             Cartridge.play()
             gun.shake(0.1,0.03)
+            from ursina.prefabs.ursfx import ursfx
+            ursfx([(0.0, 0.0), (0.1, 0.9), (0.15, 0.75), (0.3, 0.14), (0.6, 0.0)], volume=0.5, wave='noise', pitch=random.uniform(-13,-12), pitch_change=-12, speed=3.0)
+
+
         def straight():
             if held_keys['w']:
                 gun.position=(0.1,-0.25,0.4)
