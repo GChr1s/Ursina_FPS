@@ -81,9 +81,9 @@ def sg():
         def shoot():
             M4A1_gunfire=Audio("assets\GunSounds\m4a1_gunshot.mp3", volume = 0.75)
             Cartridge=Audio("assets\GunSounds\Cartridge.mp3", volume = 0.75)
-            bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.red,  collision=True, collider="box")
+            bullet = Entity(parent=gullet, model='cube', scale=(0.75,0.75,2), rotation_y=90, color=color.lime,  collision=True, collider="box")
             bullet.world_parent = scene
-            bullet.animate_position(bullet.position+(bullet.forward*2500), curve=curve.linear, duration=1)
+            bullet.animate_position(bullet.position+(bullet.forward*1500), curve=curve.linear, duration=1)
             destroy(bullet, delay=1)
             M4A1_gunfire.play()
             Cartridge.play()
