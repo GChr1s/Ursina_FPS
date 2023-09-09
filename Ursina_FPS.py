@@ -39,6 +39,11 @@ def sg():
     
     texturePath = "assets/brick.jpg"
 
+    for i in range(0,30,1):
+        parkour = Entity(model='cube',scale=(2,2,5),position=(45-5*i,1+2*i,45), collider="box")
+        hitbox =Entity(model='cube',scale=(2.5,2,5.5),position=(45-5*i,1+2*i,45),collider="box",visible=False)
+
+
     barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (5,300,100),position=(50,0,0),collider="box")
     barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (5,300,100),position=(-50,0,0),collider="box")
     barrier = Entity(model='cube', texture=texturePath,texture_scale=(10,10), scale = (100,300,5),position=(0,0,50),collider="box")
@@ -90,7 +95,6 @@ def sg():
             M4A1_gunfire.play()
             Cartridge.play()
             gun.shake(0.1,0.03)
-
         def straight():
             if held_keys['w']:
                 gun.position=(0.1,-0.25,0.4)
@@ -112,13 +116,15 @@ def sg():
                     shoot()
         def rm():
             if held_keys['right mouse']:
+
                 player.speed = 5
                 gun.rotation=(0,0,0)
                 gun.position=(0,-0.124,0.3)
                 gullet.position=(0,-0.124,1)
                 if held_keys['left mouse']:
                     shoot()
-            if not held_keys['right mouse']:
+            elif not held_keys['right mouse']:
+                
                 player.speed = 10
                 straight()
         
