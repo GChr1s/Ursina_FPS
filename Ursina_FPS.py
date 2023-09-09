@@ -2,6 +2,8 @@ from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
 from ursina import curve
+from ursina.prefabs.health_bar import HealthBar
+
 app = Ursina()
 window.vsync = False
 #import menu
@@ -70,7 +72,7 @@ def sg():
     player = FirstPersonController(y=2, origin_y=-.5)
     player.gun = None
     player.speed = 10
-    
+
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
     gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
     suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
@@ -79,11 +81,6 @@ def sg():
     mouse.traverse_target = shootables_parent  
 
     bullet=None
-
-    def fullauto():
-            if not gun.on_cooldown:
-                gun.on_cooldown = True
-                invoke(setattr, gun, 'on_cooldown', False, delay=.15)
 
     def aim(self):
         def shoot():
