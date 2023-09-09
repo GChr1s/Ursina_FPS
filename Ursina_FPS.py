@@ -71,6 +71,7 @@ def sg():
     apt = Entity(model='cube', scale=(5,100,10),position=(30,50,-15), collider='box', texture='white_cube')
     player = FirstPersonController(y=2, origin_y=-.5)
     player.gun = None
+    
     player.speed = 10
 
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
