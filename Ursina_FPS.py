@@ -90,7 +90,7 @@ def sg():
     mouse.traverse_target = shootables_parent
 
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
-    gun.muzzle_flash = Entity(parent=gun, position=(0,0.5,9), scale=5, model='quad', color=color.yellow, enabled=False)
+    gun.muzzle_flash = Entity(parent=gun, position=(0,0.5,0), model='assets/muzzleflash.obj', texture = "assets\muzzleflash.png",color=color.yellow, enabled=False)
 
     def aim(self):
         def shoot():
@@ -100,7 +100,7 @@ def sg():
             M4A1_gunfire.play()
             Cartridge.play()
             gun.shake(0.1,0.03)
-            invoke(gun.muzzle_flash.disable, delay=.05)        
+            invoke(gun.muzzle_flash.disable, delay=.05)            
             if mouse.hovered_entity and hasattr(mouse.hovered_entity, 'hp'):
                 mouse.hovered_entity.hp -= 10
                 mouse.hovered_entity.blink(color.red)
