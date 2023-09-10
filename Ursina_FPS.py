@@ -103,7 +103,6 @@ def sg():
 
             self.health_bar.alpha = max(0, self.health_bar.alpha - time.dt)
 
-
             self.look_at_2d(player.position, 'y')
             hit_info = raycast(self.world_position + Vec3(0,1,0), self.forward, 30, ignore=(self,))
             # print(hit_info.entity)
@@ -128,7 +127,6 @@ def sg():
     # Enemy()
     enemies = [Enemy(x=x*4) for x in range(4)]
 
-
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
     gullet = Entity(model='cube', parent=camera, scale=0.02, rotation_y=270, position=(0.25,-0.1,0.95), color=color.black, collision=True, visible=False)
     suppressor = Entity(model='assets\Suppressor\source\low.obj', texture='assets\Suppressor\Textures\Suppressor_Base_color.png', parent=camera, scale=10)
@@ -150,8 +148,6 @@ def sg():
             Cartridge.play()
             gun.shake(0.1,0.03)
             
-
-
         def straight():
             if held_keys['w']:
                 gun.position=(0.1,-0.25,0.4)
@@ -173,21 +169,21 @@ def sg():
                     shoot()
         def rm():
             if held_keys['right mouse']:
-
                 player.speed = 5
                 gun.rotation=(0,0,0)
                 gun.position=(0,-0.124,0.3)
                 gullet.position=(0,-0.124,1)
                 if held_keys['left mouse']:
                     shoot()
+
             elif not held_keys['right mouse']:
-                
                 player.speed = 10
                 straight()
         
         if held_keys['shift']:
             player.speed = 15
             straight()
+
         if not held_keys['shift']:
             player.speed = 10
             gun.position=(0.25,-0.15,0.5)
