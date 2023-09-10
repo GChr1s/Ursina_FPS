@@ -156,14 +156,14 @@ def sg():
 
     class Enemy(Entity):
         def __init__(self, **kwargs):
-            super().__init__(parent=shootables_parent, model='cube', scale_y=5, scale_x=2, origin_y=-.5, color=color.black, collider='box', **kwargs)
+            super().__init__(parent=shootables_parent, model='cube', scale_y=4, origin_y=-.5, color=color.black, collider='box', **kwargs)
             self.health_bar = Entity(parent=self, y=1.3, model='cube', color=color.red, world_scale=(1.5,.1,.1))
             self.max_hp = 100
             self.hp = self.max_hp
 
         def update(self):
             dist = distance_xz(player.position, self.position)
-            if dist > 80:
+            if dist > 40:
                 return
 
             self.health_bar.alpha = max(0, self.health_bar.alpha - time.dt)
