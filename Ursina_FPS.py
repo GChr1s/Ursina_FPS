@@ -173,7 +173,7 @@ def sg():
             # print(hit_info.entity)
             if hit_info.entity == player:
                 if dist > 0:
-                    self.position += self.forward * time.dt * 5
+                    self.position += self.forward * time.dt * 12
             
             if player.intersects(self):
                 exit()
@@ -194,7 +194,7 @@ def sg():
 
     # Enemy()
     enemies = [Enemy(x=x+1) for x in range(25)]
-
+    
     aim = Entity(input=aim)
     
 def start_game():
