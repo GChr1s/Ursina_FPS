@@ -82,7 +82,7 @@ def sg():
     apt = Entity(model='cube', scale=(5,100,10),position=(30,50,-30), collider='box', texture='white_cube')
     apt = Entity(model='cube', scale=(5,100,10),position=(30,50,-15), collider='box', texture='white_cube')
     
-    player = FirstPersonController(model='cube', z=-10, color=color.orange, origin_y=-.5, speed=8, collider='box',visbile=False)
+    player = FirstPersonController(model='cube', z=-25, color=color.orange, origin_y=-.5, speed=8, collider='box',visbile=False)
     player.collider = BoxCollider(player, Vec3(0,1,0), Vec3(1,2,1))
     player.gun = None
     player.speed = 10
@@ -156,14 +156,14 @@ def sg():
 
     class Enemy(Entity):
         def __init__(self, **kwargs):
-            super().__init__(parent=shootables_parent, model='cube', scale_y=2, origin_y=-.5, color=color.black, collider='box', **kwargs)
-            self.health_bar = Entity(parent=self, y=1.2, model='cube', color=color.red, world_scale=(1.5,.1,.1))
+            super().__init__(parent=shootables_parent, model='cube', scale_y=5, scale_x=2, origin_y=-.5, color=color.black, collider='box', **kwargs)
+            self.health_bar = Entity(parent=self, y=1.3, model='cube', color=color.red, world_scale=(1.5,.1,.1))
             self.max_hp = 100
             self.hp = self.max_hp
 
         def update(self):
             dist = distance_xz(player.position, self.position)
-            if dist > 40:
+            if dist > 80:
                 return
 
             self.health_bar.alpha = max(0, self.health_bar.alpha - time.dt)
