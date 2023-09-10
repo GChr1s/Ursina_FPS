@@ -81,6 +81,7 @@ def sg():
     apt = Entity(model='cube', scale=(5,100,10),position=(15,50,-30), collider='box', texture='white_cube')
     apt = Entity(model='cube', scale=(5,100,10),position=(30,50,-30), collider='box', texture='white_cube')
     apt = Entity(model='cube', scale=(5,100,10),position=(30,50,-15), collider='box', texture='white_cube')
+    
     player = FirstPersonController(model='cube', z=-10, color=color.orange, origin_y=-.5, speed=8, collider='box',visbile=False)
     player.collider = BoxCollider(player, Vec3(0,1,0), Vec3(1,2,1))
     player.gun = None
@@ -90,7 +91,7 @@ def sg():
     mouse.traverse_target = shootables_parent
 
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
-    gun.muzzle_flash = Entity(parent=gun, position=(0,0.5,0), model='assets/muzzleflash.obj', texture = "assets\muzzleflash.png",color=color.yellow, enabled=False)
+    gun.muzzle_flash = Entity(parent=gun, position=(0,0.5,9), scale=5, model='quad', color=color.yellow, enabled=False)
 
     def aim(self):
         def shoot():
@@ -100,7 +101,7 @@ def sg():
             M4A1_gunfire.play()
             Cartridge.play()
             gun.shake(0.1,0.03)
-            invoke(gun.muzzle_flash.disable, delay=.05)            
+            invoke(gun.muzzle_flash.disable, delay=.05)
             if mouse.hovered_entity and hasattr(mouse.hovered_entity, 'hp'):
                 mouse.hovered_entity.hp -= 10
                 mouse.hovered_entity.blink(color.red)
@@ -155,7 +156,7 @@ def sg():
 
     class Enemy(Entity):
         def __init__(self, **kwargs):
-            super().__init__(parent=shootables_parent, model='cube', scale_y=2, origin_y=-.5, color=color.light_gray, collider='box', **kwargs)
+            super().__init__(parent=shootables_parent, model='cube', scale_y=2, origin_y=-.5, color=color.black, collider='box', **kwargs)
             self.health_bar = Entity(parent=self, y=1.2, model='cube', color=color.red, world_scale=(1.5,.1,.1))
             self.max_hp = 100
             self.hp = self.max_hp
@@ -171,8 +172,11 @@ def sg():
             hit_info = raycast(self.world_position + Vec3(0,1,0), self.forward, 30, ignore=(self,))
             # print(hit_info.entity)
             if hit_info.entity == player:
-                if dist > 2:
+                if dist > 0:
                     self.position += self.forward * time.dt * 5
+            
+            if player.intersects(self):
+                exit()
 
         @property
         def hp(self):
@@ -184,12 +188,12 @@ def sg():
             if value <= 0:
                 destroy(self)
                 return
-
+            
             self.health_bar.world_scale_x = self.hp / self.max_hp * 1.5
             self.health_bar.alpha = 1
 
     # Enemy()
-    enemies = [Enemy(x=x*4) for x in range(4)]
+    enemies = [Enemy(x=x+1) for x in range(25)]
 
     aim = Entity(input=aim)
     
