@@ -7,7 +7,6 @@ from ursina.prefabs.health_bar import HealthBar
 
 app = Ursina()
 window.vsync = False
-#import menu
 random.seed(0)
 Entity.default_shader = lit_with_shadows_shader
 sun = DirectionalLight()
@@ -170,7 +169,6 @@ def sg():
 
             self.look_at_2d(player.position, 'y')
             hit_info = raycast(self.world_position + Vec3(0,1,0), self.forward, 30, ignore=(self,))
-            # print(hit_info.entity)
             if hit_info.entity == player:
                 if dist > 0:
                     self.position += self.forward * time.dt * 12
@@ -192,7 +190,6 @@ def sg():
             self.health_bar.world_scale_x = self.hp / self.max_hp * 1.5
             self.health_bar.alpha = 1
 
-    # Enemy()
     enemies = [Enemy(x=x+1) for x in range(25)]
     
     aim = Entity(input=aim)
@@ -202,7 +199,6 @@ def start_game():
     sg()
     destroy(menu)
 
-# main menu content
 main_menu.buttons = [
     MenuButton('start', on_click=start_game),
     MenuButton('options', on_click=Func(setattr, state_handler, 'state', 'options_menu')),
@@ -212,7 +208,6 @@ for i, e in enumerate(main_menu.buttons):
     e.parent = main_menu
     e.y = (-i-2) * button_spacing
 
-# options menu content
 volume_slider = Slider(0, 10, default=10, step=1, text='Volume', parent=options_menu, x=-.25)
 def set_volume_multiplier():
     Audio.volume_multiplier = volume_slider.value
@@ -223,7 +218,6 @@ options_back = MenuButton(parent=options_menu, text='Back', x=-.25, origin_x=-.5
 for i, e in enumerate((volume_slider, options_back)):
     e.y = -i * button_spacing
 
-# animate the buttons in nicely when changing menu
 for menu in (main_menu, options_menu):
     def animate_in_menu(menu=menu):
         for i, e in enumerate(menu.children):
