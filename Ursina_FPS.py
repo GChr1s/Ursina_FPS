@@ -3,6 +3,7 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
 from ursina import curve
 from ursina.prefabs.health_bar import HealthBar
+import os
 
 
 app = Ursina()
@@ -39,7 +40,7 @@ def sg():
     sun.look_at(Vec3(1,-1,-1))
     Sky()
     
-    texturePath = "assets/brick.jpg"
+    texturePath ="assets\\brick.jpg"
 
     
     for i in range(0,18,1):
@@ -88,7 +89,7 @@ def sg():
 
     shootables_parent = Entity()
     mouse.traverse_target = shootables_parent
-
+    
     gun = Entity(model='assets\m4a1\M4A1.fbx', texture='assets\m4a1\mat0_c.jpg', parent=camera, position=(0.25,-0.15,0.5), scale=0.05, on_cooldown=False)
     gun.muzzle_flash = Entity(parent=gun, position=(0,0.5,9), scale=5, model='quad', color=color.yellow, enabled=False)
 
