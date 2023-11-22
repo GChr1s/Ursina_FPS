@@ -5,7 +5,6 @@ from ursina import curve
 from ursina.prefabs.health_bar import HealthBar
 import os
 
-
 app = Ursina()
 window.vsync = False
 random.seed(0)
