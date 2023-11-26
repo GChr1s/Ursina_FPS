@@ -14,15 +14,12 @@ sun.look_at(Vec3(1, -1, -1))
 Sky()
 
 app = Ursina()
-
-
 class MenuButton(Button):
     def __init__(self, text='', **kwargs):
         super().__init__(text, scale=(.25, .075), highlight_color=color.azure, **kwargs)
 
         for key, value in kwargs.items():
             setattr(self, key, value)
-
 
 button_spacing = .075 * 1.25
 menu_parent = Entity(parent=camera.ui, y=.25)
@@ -34,7 +31,6 @@ state_handler = Animator({
     'options_menu': options_menu,
 }
 )
-
 
 def sg():
     random.seed(0)
@@ -238,17 +234,14 @@ def sg():
 
     aim = Entity(input=aim)
 
-
 def start_game():
     menu_parent.enabled = False
     sg()
     destroy(menu)
 
-
 main_menu.buttons = [
     MenuButton('start', on_click=start_game),
-    MenuButton('options', on_click=Func(
-        setattr, state_handler, 'state', 'options_menu')),
+    MenuButton('options', on_click=Func(setattr, state_handler, 'state', 'options_menu')),
     MenuButton('quit', on_click=Sequence(Wait(.01), Func(sys.exit))),
 ]
 for i, e in enumerate(main_menu.buttons):
@@ -258,13 +251,10 @@ for i, e in enumerate(main_menu.buttons):
 volume_slider = Slider(0, 10, default=10, step=1,
                        text='Volume', parent=options_menu, x=-.25)
 
-
 def set_volume_multiplier():
     Audio.volume_multiplier = volume_slider.value
 
-
 volume_slider.on_value_changed = set_volume_multiplier
-
 options_back = MenuButton(parent=options_menu, text='Back', x=-.25,
                           origin_x=-.5, on_click=Func(setattr, state_handler, 'state', 'main_menu'))
 
