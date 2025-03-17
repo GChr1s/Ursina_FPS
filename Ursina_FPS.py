@@ -211,7 +211,7 @@ for i, e in enumerate(main_menu.buttons):
 volume_slider = Slider(0, 10, default=10, step=1, text='Volume', parent=options_menu, x=-.25)
 
 def set_volume_multiplier():
-    Audio.volume_multiplier = volume_slider.value
+    Audio.volume_multiplier = volume_slider.value / 10
 
 volume_slider.on_value_changed = set_volume_multiplier
 options_back = MenuButton(parent=options_menu, text='Back', x=-.25, origin_x=-.5, on_click=Func(setattr, state_handler, 'state', 'main_menu'))
